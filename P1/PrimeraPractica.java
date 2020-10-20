@@ -8,6 +8,13 @@
 import java.lang.*;
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
+import java.awt.Dimension;
+
+// Librerías de graficación
+import org.jfree.chart.*;
+import org.jfree.data.xy.*;
+import org.jfree.chart.plot.*;
 
 public class PrimeraPractica{
     // Constantes de colores para impresión en consola
@@ -25,84 +32,203 @@ public class PrimeraPractica{
         /*
             Argumentos
             ==========
-                args[1](Obligatorio) - Puede tomar valor 1 o 2
+                $ args[1](Obligatorio) - Puede tomar valor 1 o 2
                     ** 1: Se ejecutara el programa de sumas binarias
                     ** 2: Se ejecutara el programa del algoritmo de Euclides
 
-                args[2](Obligatorio) - Nombre de un archivo con los datos para ser evaluados
+                $ args[2](Obligatorio) - Nombre de un archivo con los datos para ser evaluados
+
+                $ args[3](Opcional) - Permite la elección del o los parámetros que se graficarán para el algoritmo de Euclides
+                    ** 0/inexistente: Se graficarán los valores de m y n
+                    ** 1: Se grafican solo los valores de m
+                    ** 2: Se grafican solo los valores de n
 
                 i.e.
                     >> usr$ java PrimeraPractica 1 numerosBinarios.txt
-                    >> usr$ java PrimeraPractica 2 sucesionFibonacci.txt
+                    >> usr$ java PrimeraPractica 2 sucesionFibonacci.txt 1
 
             Archivo
             =======
-                - Solo se aceptan números enteros, comas y barra '/'
+                - Solo se aceptan números enteros, comas y barra '/'(solo en el caso de Euclides)
                 - No se aceptan caracteres alfabéticos u otros caracteres especiales
                 - Se ignoran espacios, tabulaciones y saltos de línea
                 - El archivo puede tener cualquier extensión
 
-                - El par de valores deben estar separadas por una coma
-                - Las parejas de números se separan por barra '/'
-
-                    i.e.
-                        Archivo >> 5,2|10,9
-
                 Suma Binaria
                 ------------
-                    - Se debera ingresar la pareja de números en decimal
+                    - Se deberan ingresar las cantidades potencia separadas por coma únicamente
+
+                        i.e.
+                            Archivo >> 5,8,63,34
+
+                Euclides
+                --------
+                    - El par de valores deben estar separadas por una coma
+                    - Las parejas de números se separan por barra '/'
+
+                        i.e.
+                            Archivo >> 5,2|10,9
 
 
         */
-        PrimeraPractica p = new PrimeraPractica();
+        PrimeraPractica practica = new PrimeraPractica();
+        Graficas graficas = new Graficas();
         int[][] valoresXTiempo;
 
-        if(args.length == 2){
+        if(args.length >= 2){
             int tiempoProceso;
             // Valores de los argumentos
             int programa =Integer.parseInt(args[0]);
+            int parametroGraficacionEuclides = 0;
             String ruta = args[1];
+
+            if(args.length == 3){
+                if(programa == 2){
+                    parametroGraficacionEuclides = Integer.parseInt(args[3]);
+                }else practica.error("La combinación de 3 parámetros solo es válido cuando el número del programa es 2(Euclides)");
+            }
 
             // Se obtienen los valores del archivo
             Archivos archivo = new Archivos(ruta);
-            ArrayList<ArrayList> valores = archivo.getValores();
+            ArrayList<Object> valores = archivo.getValores((programa == 1)?true:false);
 
-            valoresXTiempo = new int[valores.size(),2]; // Se asigna la cantidad de pares ordenados para la graficación
+            valoresXTiempo = new int[valores.size()*((parametroGraficacionEuclides == 0 && programa == 2)?2:1)][2]; // Se asigna la cantidad de pares ordenados para la graficación
 
             if(programa == 1){ // Suma binaria
+                
                 for(int i=0;i<valores.size();i++){
-                    ArrayList pares = valores.get(i);
-                    
-                    int r = Binarios.longitudNumeroMayor((int)pares.get(0),(int)pares.get(1)); // Se obtienen el tamaño potencia 2 de los arreglos según el número más grande 
+                    int r = (int)Math.pow(2,(int)valores.get(i));
                     
                     // Se obtiene la cadena binaria
-                    int[] a = Binarios.aCadenaBinaria((int)pares.get(0),r); 
-                    int[] b = Binarios.aCadenaBinaria((int)pares.get(1),r);
+                    int[] a = Binarios.generarCadenaBinaria(r);
+                    int[] b = Binarios.generarCadenaBinaria(r);
 
-                    // Empieza el cálculo del proceso
-                    tiempoProceso = System.currentTimeNano();
-                    Binarios.suma(a,b,r);
-                    tiempoProceso -= System.currentTimeNano();
+                    // Empieza el cálculo del tiempo y el proceso
+                    tiempoProceso =(int)System.nanoTime();
+                    int[] c = Binarios.suma(a,b,r);
+                    tiempoProceso =(int)System.nanoTime() - tiempoProceso;
 
-                    valoresXTiempo[i] = {r,tiempoProceso}; // Se agrega el par ordenado
+                    System.out.printf("A:%s , B:%s, C:%s\n\n",Arrays.toString(a),Arrays.toString(b),Arrays.toString(c));
+
+                    int[] parOrdenado = {r,(int)tiempoProceso};
+                    valoresXTiempo[i] = parOrdenado; // Se agrega el par ordenado
                 }
+
+                graficas.agregarDatosGraficacion("r vs tiempo",valoresXTiempo);
+                graficas.configurarGrafica("Suma binaria de 2 ","Tamaño de arreglos(r)","Tiempo de proceso(t)");
             }else if (programa == 2){ // Algoritmo de Euclides
-                for(ArrayList pares: valores){
-                    int m = pares.get(0);
-                    int n = pares.get(1);
+                int j=0;
+                for(int i=0;i<valores.size();i++,j+=((parametroGraficacionEuclides == 0)?2:1)){
+                    int[] parOrdenado = new int[2];
+                    int[] parOrdenadoExtra = new int[2];
 
-                    // Empieza el cálculo del proceso
-                    tiempoProceso = System.currentTimeNano();
-                    MCM.Euclides(m,n);
-                    tiempoProceso -= System.currentTimeNano();
+                    ArrayList pares = (ArrayList)valores.get(i);
+                    int m = (int)pares.get(0);
+                    int n = (int)pares.get(1);
 
-                    valoresXTiempo[i] = {r,tiempoProceso}; // Se agrega el par ordenado
+                    // Empieza el cálculo del tiempo y el proceso
+                    tiempoProceso =(int)System.nanoTime();
+                    MCD.Euclides(m,n);
+                    tiempoProceso =(int)System.nanoTime() - tiempoProceso;
+
+                    switch(parametroGraficacionEuclides){
+                        case 1:
+                            parOrdenado[0] = m;
+                            parOrdenado[1] = (int)tiempoProceso;
+                            break;
+                        case 2:
+                            parOrdenado[0] = n;
+                            parOrdenado[1] = (int)tiempoProceso;
+                            break;
+                        default:
+                            parOrdenado[0] = m;
+                            parOrdenado[1] = (int)tiempoProceso;
+                            parOrdenadoExtra[0] = n;
+                            parOrdenadoExtra[1] = (int)tiempoProceso;
+
+                    }
+
+                    valoresXTiempo[j] = parOrdenado; // Se agrega el par ordenado
+                    if(parametroGraficacionEuclides == 0) valoresXTiempo[j+1] = parOrdenadoExtra; // Se agrega los valores en n cuando se grafican las 2 variables
                 }
-            }else p.error("No es válido el número del programa especificado como parámetro");
+
+                /* Se agregan los datos en función del 3° parámetro
+                    - Si el parámetro es 0 entonces se agregan 2 gráficas(una para m y otra para n)
+                    - De lo contrario solo el de m o n
+                */
+                if(parametroGraficacionEuclides == 0 && programa == 2){
+                    for(int vars=0;vars<2;vars++){ // Se obtienen los pares ordenados de cada variable cuando 'variables' toma valor de 0:n y 1:m
+                        int[][] valoresAux = new int[(int)valoresXTiempo.length/2][2];
+                        
+                        j=0;
+                        for(int i=vars; i<valoresXTiempo.length; i+=2,j++){
+                            for(int k=0;k<2;k++){
+                                valoresAux[j][k] = valoresXTiempo[i][k];
+                            }
+                        }
+                        
+                        graficas.agregarDatosGraficacion(((vars == 0)?"m":"n") + " vs tiempo",valoresAux);
+                    }
+                }else graficas.agregarDatosGraficacion(((parametroGraficacionEuclides == 1)?"m":"n") + " vs tiempo",valoresXTiempo);
+                graficas.configurarGrafica("Mínimo Común Divisor de 2 números enteros con el algoritmo de Euclides","Tamaño de arreglos(r)","Tiempo de proceso(t)");
+            }else practica.error("No es válido el número del programa especificado como parámetro");
 
             // Graficación de los pares ordenados en valoresXTiempo
-        }else p.error("Deben de ingresarse los argumentos obligatorios\n" + ANSI_GREEN + "(Ejemplo) usr$ PrimeraPractica #programa archivoCantidades.txt\n");
+            for(int[] par:valoresXTiempo)
+
+            graficas.mostrarGrafica();
+        }else practica.error("Deben de ingresarse los argumentos obligatorios\n" + ANSI_GREEN + "(Ejemplo) usr$ PrimeraPractica #programa archivoCantidades.txt\n");
     }
+}
+
+class Graficas{
+    protected JFrame ventana;
+    protected JPanel panel;
+
+    protected XYSeriesCollection coleccionDatos;
+    protected JFreeChart grafica;
+    protected ChartPanel panelGrafica;
+
+
+    public Graficas(){
+        coleccionDatos = new XYSeriesCollection();
+
+        ventana = new JFrame();
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setSize(960,590);
+
+        panel = new JPanel();
+        ventana.add(panel);
+    }
+
+    public void mostrarGrafica(){
+        ventana.setVisible(true);
+    }
+
+    public void configurarGrafica(String titulo, String etiquetaX, String etiquetaY){
+        grafica = ChartFactory.createXYLineChart(
+            titulo,
+            etiquetaX,
+            etiquetaY,
+            coleccionDatos,
+            PlotOrientation.VERTICAL,
+            true, true, false
+            );
+
+        panelGrafica = new ChartPanel(grafica);
+        panelGrafica.setPreferredSize(new java.awt.Dimension(960,540));
+        panel.add(panelGrafica);
+    }
+
+    public void agregarDatosGraficacion(String nombreGrafo, int[][] paresOrdenados){
+        XYSeries datos = new XYSeries(nombreGrafo);
+
+        for(int[] par: paresOrdenados) // Se asigna los datos al conjunto
+            datos.add((long)par[0],(long)par[1]);
+
+        coleccionDatos.addSeries(datos);
+    }
+
 }
 
 // Clase privada para el manejo de los archivos con las cantidades a evaluar
@@ -110,7 +236,7 @@ class Archivos{
     protected String ruta;
 
     // Se debe especificar la ruta del archivo en el constructor
-    Archivos(String r){
+    public Archivos(String r){
         ruta = r;
     }
 
@@ -138,16 +264,21 @@ class Archivos{
     }
 
     // Regresa los valores del archivo en un ArrayList con los pares de enteros
-    public ArrayList<ArrayList> getValores(){
-        ArrayList<ArrayList> valores = new ArrayList<ArrayList>();
+    public ArrayList<Object> getValores(boolean bin){
+        ArrayList<Object> valores = new ArrayList<Object>();
         int longitud = 0;
 
-        for(String par:getPares().split("/")){ // Se divide la cadena por pares
-            ArrayList auxValor = new ArrayList<Integer>();
+        if(bin){ // Archivo con una lísta de números para la suma binaria
+            for(String cantidad:getPares().split(","))
+                valores.add(new Integer(Integer.parseInt(cantidad)));
+        }else{ 
+            for(String par:getPares().split("/")){ // Se divide la cadena por pares
+                ArrayList auxValor = new ArrayList<Integer>();
 
-            for(String val: par.split(",")) // Se divide el par en cada cantidad
-                auxValor.add(Integer.parseInt(val)); // Se guardan como enteros los valores del par
-            valores.add(auxValor);
+                for(String val: par.split(",")) // Se divide el par en cada cantidad
+                    auxValor.add(Integer.parseInt(val)); // Se guardan como enteros los valores del par
+                valores.add(auxValor);
+            }
         }
         return valores;
     }
@@ -155,56 +286,24 @@ class Archivos{
 
 // Clase con los métodos y para realizar la suma de cadenas binarias
 class Binarios{
-    
-    // Algoritmo de suma binaria para 2 cadenas binarias de tamaño r
-    public static int[] Suma(int[] A, int[] B, int r){
-
-        int[] C = new int[r];
-        int acarreo = 0;
-
-        for(int i = r-1; i >= 0; i--){
-            if(acarreo == 0){
-                if(A[i] == B[i] && A[i] == 1){
-                    C[i] = 0;
-                    acarreo = 1;
-                }
-                else{
-                    C[i] = 1;
-                    acarreo = 0;
-                }
-            }
-            else {
-                if(A[i] == B[i]){
-                    C[i] = 1;
-                    if(A[i] == 1)
-                        acarreo = 1;
-                    else
-                        acarreo = 0;
-                }
-                else{
-                    C[i] = 0;
-                    acarreo = 1;
-                }
-            }
-        }
-        return C;
-    }
 
     // Algoritmo alternativo de suma binaria utilizando operaciones booleanas AND,OR y XOR
     public static int[] suma(int[] A,int[] B, int r){
-        int C[] = new int[r];
+        int c[] = new int[r+1];
         int acarreo = 0;
         for (int i=r-1; i>=0; i--){
-            C[i] = acarreo ^ A[i] ^ B[i]; // Valor de la suma mediante el uso de la operación XOR
+            c[i+1] = acarreo ^ A[i] ^ B[i]; // Valor de la suma mediante el uso de la operación XOR
             acarreo = (acarreo & A[i]) | (A[i] & B[i]); // Se asigna el valor del acarreo
         }
-        return C;
+        c[0] = (acarreo > 0)?1:0;
+        return c;
     }
 
-    // Regresa el tamaño que deberán tener los arreglos en base al mayor número de los 2
-    public static int longitudNumeroMayor(int a, int b){
-        a = (a>b)?a:b;
-        return (int)Math.round(Math.log10(a)/Math.log10(2))+1;
+    public static int[] generarCadenaBinaria(int r){
+        int[] cadena = new int[r];
+        for(int i=0;i<r;i++)
+            cadena[i] = (int)(Math.random() * 2);
+        return cadena;
     }
 
     // Convierte el valor de una decimal a su representación binaria en un arreglo de enteros
@@ -220,7 +319,7 @@ class Binarios{
 
 
 //Clase que contiene el algoritmo de Euclides como método estático
-class MCM{
+class MCD{
 
     // Algoritmo de Euclides para el cálculo del mínimo común múltiplo de 2 números enteros
     public static int Euclides(int m,int n){
