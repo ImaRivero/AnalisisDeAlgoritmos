@@ -1,0 +1,121 @@
++-------------------------------------------+
+| Primer práctica de Análisis de Algoritmos |
++-------------------------------------------+
+    ----------------
+    REFRENCIA RÁPIDA
+    ----------------
+        Primero se debera dirigir a la carpeta "Codigo" para la compilación y ejecución del programa.
+
+        En caso de necesitar compilación se puede realizar con el siguiente comando:
+            ***************************************************************************
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica.java
+            ***************************************************************************
+
+        La ejecución se debe realizar según las instrucciones de cada programa:
+
+        Suma Binaria
+        ------------
+
+            Utilizando el archivo con valores ejemplo incluidos en el archivo comprimido, mostrará la gráfica de valores de tamaño de potencia desde 0 hasta 10
+                ***************************************************************************************************************************
+                $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 1 ../ArchivosValoresEjemplos/valoresSumaBinaria
+                ***************************************************************************************************************************
+
+
+        Algoritmo de Euclides
+        ---------------------
+
+            Utilizando el archivo con valores ejemplo incluidos en el archivo comprimido mostrará la gráfica de los primeros 20 valores de la sucesión de fibonacci.
+
+            Para visualizar las 2 gráficas de m y n vs tiempo se debe ejecutar el siguiente comando
+                **************************************************************************************************************************************************
+                $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 
+                **************************************************************************************************************************************************
+
+            Para visualizar únicamente la gráfica de m vs tiempo
+                ****************************************************************************************************************************************************
+                $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 1
+                ****************************************************************************************************************************************************
+
+            Para visualizar únicamente la gráfica de n vs tiempo
+                ****************************************************************************************************************************************************
+                $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 2
+                ****************************************************************************************************************************************************
+
+
+____________________________________________________________________________________________________________________________________________________________________
+
+	Bibliotecas
+	>>>>>>>>>>>
+
+		JFreeChart
+		----------
+			Utilizado para la graficación de los pares ordenados obtenidos del cálculo del tiempo de ejecución de las funciones y los valores utilizados en la función
+
+			En este proyecto se utilizan los recursos de la biblioteca en su archivo de extensión .jar, por lo que no hay necesidad de realizar una instalación pero debe considerarse su inclusión como argumento de la compilación y ejecución.
+
+			Nombre de la biblioteca: jfreechart-1.0.19.jar
+
+	Instrucciones
+	>>>>>>>>>>>>>
+
+		Derivado de la utilización de bibliotecas en archivos .jar, será necesaria para su compilación especificar la ruta de los archivos. Esto se logra con el argumento de compilación y ejecución '-cp' o '-classpath'
+
+		Para la compilación de la clase PrimeraPractica.java
+			***************************************************************************
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica.java
+            ***************************************************************************
+
+        Para la ejecución del programa donde la clase main está en PrimeraPractica.class
+			***********************************************************************************************
+            $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica [argumentos del programa]
+            ***********************************************************************************************
+
+		
+        Argumentos de ejecución
+        =======================
+            >> args[1](Obligatorio) - Puede tomar valor 1 o 2
+                
+                ** 1: Se ejecutara el programa de sumas binarias
+                ** 2: Se ejecutara el programa del algoritmo de Euclides
+
+            >> args[2](Obligatorio) - Ruta de un archivo con los datos para ser evaluados
+
+            >> args[3](Opcional) - Permite la elección del o los parámetros que se graficarán para el algoritmo de Euclides
+            	Solo puede ser utilizado en combinación con el parámetro[1] y que tenga el valor '2'(ejecución del algoritmo de Euclides)
+                
+                ** 0/inexistente: Se graficarán los valores de m y n
+                ** 1: Se grafican solo los valores de m
+                ** 2: Se grafican solo los valores de n
+
+            Ejemplo de uso de parámetros:
+            	******************************************************
+                $ java PrimeraPractica 1 numerosBinarios.txt
+                $ java PrimeraPractica 2 sucesionFibonacci.txt 1
+                ******************************************************
+
+        Formato del Archivo
+        ===================
+            - Solo se aceptan números enteros, comas y barra '/'(solo en el caso de Euclides)
+            - No se aceptan caracteres alfabéticos u otros caracteres especiales
+            - Se ignoran espacios, tabulaciones y saltos de línea
+            - El archivo puede tener cualquier extensión
+
+            Suma Binaria
+            ------------
+                - Se deberan ingresar las cantidades potencia separadas por coma únicamente
+
+                Ejemplo de archivo para potencias de suma binaria
+                    ++++++++++++++++++++
+                    	5, 8, 63, 34
+                    ++++++++++++++++++++
+
+            Euclides
+            --------
+                - El par de valores deben estar separadas por una coma
+                - Las parejas de números se separan por barra '/'
+
+                Ejemplo de archivo para parejas de números en el algoritmo de Euclides
+                    +++++++++++++++++++
+                    	5,8 | 8,13
+                    +++++++++++++++++++

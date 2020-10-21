@@ -1,9 +1,0 @@
-Compilación
->>>>>>>>>>>
-	
-	$ javac -cp .:jcommon-1.0.23.jar:jfreechart-1.0.19.jar PrimeraPractica.java 
-
-Ejecución
->>>>>>>>>
-	
-	$ java -cp .:jcommon-1.0.23.jar:jfreechart-1.0.19.jar PrimeraPractica 2 valores
