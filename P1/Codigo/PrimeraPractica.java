@@ -81,7 +81,7 @@ public class PrimeraPractica{
                 int j=0;
 
                 practica.mensaje("Pares Ordenados(m/n vs tiempo)");
-                MCD.Euclides(0,0); // La primer ejecución tardaba hasta 1000 vecés más tiempo en ejecutarse independiente del 
+                MCD.Euclides(1,1); // La primer ejecución tardaba hasta 1000 vecés más tiempo en ejecutarse independiente del 
 
                 for(int i=0;i<valores.size();i++,j+=((parametroGraficacionEuclides == 0)?2:1)){
                     int[] parOrdenado = new int[2];

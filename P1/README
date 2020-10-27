@@ -7,9 +7,9 @@
         Primero se debera dirigir a la carpeta "Codigo" para la compilación y ejecución del programa.
 
         En caso de necesitar compilación se puede realizar con el siguiente comando:
-            ***************************************************************************
+            ************
             $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica.java
-            ***************************************************************************
+            ************
 
         La ejecución se debe realizar según las instrucciones de cada programa:
 
@@ -17,9 +17,9 @@
         ------------
 
             Utilizando el archivo con valores ejemplo incluidos en el archivo comprimido, mostrará la gráfica de valores de tamaño de potencia desde 0 hasta 10
-                ***************************************************************************************************************************
+                ************
                 $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 1 ../ArchivosValoresEjemplos/valoresSumaBinaria
-                ***************************************************************************************************************************
+                ************
 
 
         Algoritmo de Euclides
@@ -28,22 +28,22 @@
             Utilizando el archivo con valores ejemplo incluidos en el archivo comprimido mostrará la gráfica de los primeros 20 valores de la sucesión de fibonacci.
 
             Para visualizar las 2 gráficas de m y n vs tiempo se debe ejecutar el siguiente comando
-                **************************************************************************************************************************************************
+                ************
                 $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 
-                **************************************************************************************************************************************************
+                ***********
 
             Para visualizar únicamente la gráfica de m vs tiempo
-                ****************************************************************************************************************************************************
+                *************
                 $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 1
-                ****************************************************************************************************************************************************
+                *************
 
             Para visualizar únicamente la gráfica de n vs tiempo
-                ****************************************************************************************************************************************************
+                *************
                 $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica 2 ../ArchivosValoresEjemplos/sucesionFibonacci 2
-                ****************************************************************************************************************************************************
+                *************
 
 
-____________________________________________________________________________________________________________________________________________________________________
+_____________________________
 
 	Bibliotecas
 	>>>>>>>>>>>
@@ -62,14 +62,14 @@ ________________________________________________________________________________
 		Derivado de la utilización de bibliotecas en archivos .jar, será necesaria para su compilación especificar la ruta de los archivos. Esto se logra con el argumento de compilación y ejecución '-cp' o '-classpath'
 
 		Para la compilación de la clase PrimeraPractica.java
-			***************************************************************************
+			*************
             $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica.java
-            ***************************************************************************
+            *************
 
         Para la ejecución del programa donde la clase main está en PrimeraPractica.class
-			***********************************************************************************************
+			*************
             $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica [argumentos del programa]
-            ***********************************************************************************************
+            *************
 
 		
         Argumentos de ejecución
@@ -89,10 +89,10 @@ ________________________________________________________________________________
                 ** 2: Se grafican solo los valores de n
 
             Ejemplo de uso de parámetros:
-            	******************************************************
+            	************************
                 $ java PrimeraPractica 1 numerosBinarios.txt
                 $ java PrimeraPractica 2 sucesionFibonacci.txt 1
-                ******************************************************
+                ************************
 
         Formato del Archivo
         ===================
