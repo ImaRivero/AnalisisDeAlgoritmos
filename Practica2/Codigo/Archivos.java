@@ -1,10 +1,16 @@
 /*
-    Fecha: 25/Octubre/2020
+    IPN - ESCOM
+    Análisis de Algoritmos
+    Prof: Benjamín Luna Benoso
+    Grupo: 3CV1
+    Práctca 2: Funciones Recursivas vs Iterativas
+    ---------------------------------------------
+    Creación: 25/Octubre/2020
     Creado por: 
         + Omar Imanol Rivero Ronquillo
         + Luis Eduardo Valle Martínez
 */
-
+        
 import java.util.*;
 import java.io.*;
 

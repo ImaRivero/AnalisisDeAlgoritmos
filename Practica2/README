@@ -8,14 +8,40 @@
 
         En caso de necesitar compilación se puede realizar con el siguiente comando:
             ************
-            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar PrimeraPractica.java
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java
             ************
 
-        La ejecución se debe realizar según las instrucciones de cada programa:
-        *
-        *
-        *
+        La ejecución se debe realizar se realizará en dependencia de los argumentos ingresados:
 
+            Ejecución de solo algoritmos de productos
+            -----------------------------------------
+                Para la ejecución exclusiva de los algoritmos que calcúlan el producto de 2 enteros, se debe de especificar como primer argumento el valor 'c', tal comando sería el siguiente:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -p ../Archivos/valoresProductos
+                    *************
+
+            Ejecución de solo algoritmos de cocientes
+            -----------------------------------------
+                Para la ejecución exclusiva de los algoritmos que calcúlan el cociente de 2 enteros, se debe de especificar como primer argumento el valor 'p', tal comando sería el siguiente:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -c ../Archivos/valoresCocientes
+                    *************
+
+                    *************
+
+            Ejecución de ambos tipos de algoritmos
+            ---------------------------------------
+                Para la ejecución de los algoritmos que calculan el producto y el cociente para 2 enteros, es posible conseguirlo especificando en el primer argumento los 2 valores 'pc' o evitando colocarlos:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -pc ../Archivos/valoresCocientes
+                    *************
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java ../Archivos/valoresCocientes
+                    *************
 
 _____________________________
 
@@ -36,7 +62,7 @@ _____________________________
 		Derivado de la utilización de bibliotecas en archivos .jar, será necesaria para su compilación especificar la ruta de los archivos. Esto se logra con el argumento de compilación y ejecución '-cp' o '-classpath'
 
 		Para la compilación de la clase SegundPractica.java
-		*************
+            *************
             $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java
             *************
 

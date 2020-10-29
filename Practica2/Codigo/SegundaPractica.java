@@ -1,9 +1,16 @@
 /*
-    Fecha: 25/Octubre/2020
+	IPN - ESCOM
+	Análisis de Algoritmos
+	Prof: Benjamín Luna Benoso
+	Grupo: 3CV1
+	Práctca 2: Funciones Recursivas vs Iterativas
+	---------------------------------------------
+    Creación: 25/Octubre/2020
     Creado por: 
         + Omar Imanol Rivero Ronquillo
         + Luis Eduardo Valle Martínez
 */
+
 import java.lang.*;
 import java.io.*;
 import java.util.*;
@@ -27,14 +34,16 @@ public class SegundaPractica{
     }
 
 	public static void main(String[] args) {
-		if(args.length > 0){
+
+		if(args.length > 0){ // Verifica que se hayan ingresado argumentos de ejecución
 			String rutaArchivo = args[0];
 			int argumentos = 0;
-			if(args.length == 1){
+
+			if(args.length == 1){ // Cuando se ingresa un solo argumento debe ser la ruta del archivo de forma obligatoria
 				if(rutaArchivo.indexOf('-') < 0)
 					SegundaPractica.error("Es necesario ingresar la ruta del archivo con los valores de ejecución");
 				argumentos = 3;
-			}else{
+			}else{ // Se debe identificar el orden correcto de los argumentos y el valor de estos
 				if(rutaArchivo.indexOf('-') >= 0){
 					rutaArchivo = args[1];
 					for(char argumento:args[0].toCharArray()){
@@ -60,7 +69,7 @@ public class SegundaPractica{
 				int producto = 0;
 				int indiceColeccion = -1;
 
-				// Primera ejecución para evitar errores
+				// Primera ejecución para evitar picos en el tiempo de procesamiento para la primera ejecución
 				Producto.prod1(1,1);
 				Producto.prod2(1,1);
 				Producto.prod3(1,1);
@@ -71,21 +80,18 @@ public class SegundaPractica{
 					producto = Producto.prod1(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
 					indiceColeccion = grafica.agregarParOrdenado("Grafica prod1",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(producto);
 
 					//Segundo Algoritmo
 					tiempoProceso = System.nanoTime();
 					producto = Producto.prod2(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
 					indiceColeccion = grafica.agregarParOrdenado("Grafica prod2",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(producto);
 
 					//Tercer Algoritmo
 					tiempoProceso = System.nanoTime();
 					producto = Producto.prod3(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
 					indiceColeccion = grafica.agregarParOrdenado("Grafica prod3",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(producto);
 				}
 
 				grafica.crearGrafica("Graficación de los valores n vs tiempo para los algoritmos de producto","Valor(n)","Tiempo de proceso(t en µs)",indiceColeccion);
@@ -95,7 +101,7 @@ public class SegundaPractica{
 				int cociente = 0;
 				int indiceColeccion = -1;
 
-				// Primera ejecución para evitar errores
+				// Primera ejecución para evitar picos en el tiempo de procesamiento para la primera ejecución
 				Cociente.div1(10,10);
 				Cociente.div2(10,10);
 				Cociente.div3(10,10);
@@ -106,23 +112,19 @@ public class SegundaPractica{
 					tiempoProceso = System.nanoTime();
 					cociente = Cociente.div1(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
-					indiceColeccion = grafica.agregarParOrdenado("Grafica div1",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(cociente);
+					indiceColeccion = grafica.agregarParOrdenado("Grafica div1",(double)par.get(0),tiempoProceso,indiceColeccion);
 
 					//Segundo Algoritmo
 					tiempoProceso = System.nanoTime();
 					cociente = Cociente.div2(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
-					indiceColeccion = grafica.agregarParOrdenado("Grafica div2",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(cociente);
+					indiceColeccion = grafica.agregarParOrdenado("Grafica div2",(double)par.get(0),tiempoProceso,indiceColeccion);
 
 					//Tercer Algoritmo
 					tiempoProceso = System.nanoTime();
 					cociente = Cociente.div3(par.get(0),par.get(1));
 					tiempoProceso = (System.nanoTime()-tiempoProceso)/1000;
-					indiceColeccion = grafica.agregarParOrdenado("Grafica div3",(double)par.get(1),tiempoProceso,indiceColeccion);
-					System.out.println(cociente);
-
+					indiceColeccion = grafica.agregarParOrdenado("Grafica div3",(double)par.get(0),tiempoProceso,indiceColeccion);
 				}
 
 				grafica.crearGrafica("Graficación de los valores n vs tiempo para los algoritmos de cociente","Divisor(div)","Tiempo de proceso(t en µs)",indiceColeccion);

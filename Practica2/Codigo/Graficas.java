@@ -1,5 +1,11 @@
 /*
-    Fecha: 25/Octubre/2020
+    IPN - ESCOM
+    Análisis de Algoritmos
+    Prof: Benjamín Luna Benoso
+    Grupo: 3CV1
+    Práctca 2: Funciones Recursivas vs Iterativas
+    ---------------------------------------------
+    Creación: 25/Octubre/2020
     Creado por: 
         + Omar Imanol Rivero Ronquillo
         + Luis Eduardo Valle Martínez
@@ -13,8 +19,9 @@ import java.awt.*;
 import org.jfree.chart.*;
 import org.jfree.data.xy.*;
 import org.jfree.chart.plot.*;
+import org.jfree.chart.renderer.xy.*;
 
-// Clase encargada de generar la interfaz gráfica y generar las gráficas
+// Clase encargada de generar la UI y las gráficas
 public class Graficas{
     protected JFrame ventana;
     protected JPanel panel;
@@ -39,6 +46,7 @@ public class Graficas{
         ventana.setVisible(true);
     }
 
+    // Crea el panel con los cuadrantes que contiene a las gráficas determinadas en el conjunto de XYSeresCollection
     public void crearGrafica(String titulo, String etiquetaX, String etiquetaY, int indiceConjuntoColecciones){
         grafica = ChartFactory.createXYLineChart(
             titulo,
@@ -51,6 +59,18 @@ public class Graficas{
 
         ChartPanel panelGrafica = new ChartPanel(grafica);
         panelGrafica.setPreferredSize(new java.awt.Dimension(500,500));
+
+        XYPlot graficaPuntos = grafica.getXYPlot( );
+      
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
+        renderer.setSeriesPaint( 0 , Color.RED );
+        renderer.setSeriesPaint( 1 , Color.BLUE );
+        renderer.setSeriesPaint( 2 , Color.GREEN );
+        renderer.setSeriesStroke( 0 , new BasicStroke( 4.0f ) );
+        renderer.setSeriesStroke( 1 , new BasicStroke( 3.0f ) );
+        renderer.setSeriesStroke( 2 , new BasicStroke( 2.0f ) );
+        graficaPuntos.setRenderer( renderer ); 
+
         panel.add(panelGrafica);
     }
 
