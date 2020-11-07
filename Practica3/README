@@ -1,0 +1,104 @@
++-----------------------------------------+
+| Segunda práctica de Análisis Algoritmos |
++-----------------------------------------+
+    ----------------
+    REFRENCIA RÁPIDA
+    ----------------
+        Primero se debera dirigir a la carpeta "Codigo" para la compilación y ejecución del programa.
+
+        En caso de necesitar compilación se puede realizar con el siguiente comando:
+            ************
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica.java
+            ************
+
+        La ejecución se debe realizar se realizará en dependencia de los argumentos ingresados:
+
+            Ejecución de solo algoritmos de productos
+            -----------------------------------------
+                Para la ejecución exclusiva de los algoritmos que calcúlan el producto de 2 enteros, se debe de especificar como primer argumento el valor 'c', tal comando sería el siguiente:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -p ../Archivos/valoresProductos
+                    *************
+
+            Ejecución de solo algoritmos de cocientes
+            -----------------------------------------
+                Para la ejecución exclusiva de los algoritmos que calcúlan el cociente de 2 enteros, se debe de especificar como primer argumento el valor 'p', tal comando sería el siguiente:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -c ../Archivos/valoresCocientes
+                    *************
+
+                    *************
+
+            Ejecución de ambos tipos de algoritmos
+            ---------------------------------------
+                Para la ejecución de los algoritmos que calculan el producto y el cociente para 2 enteros, es posible conseguirlo especificando en el primer argumento los 2 valores 'pc' o evitando colocarlos:
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -pc ../Archivos/valoresCocientes
+                    *************
+
+                    *************
+                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java ../Archivos/valoresCocientes
+                    *************
+
+_____________________________
+
+	Bibliotecas
+	>>>>>>>>>>>
+
+		JFreeChart
+		----------
+			Utilizado para la graficación de los pares ordenados obtenidos del cálculo del tiempo de ejecución de las funciones y los valores utilizados en la función
+
+			En este proyecto se utilizan los recursos de la biblioteca en su archivo de extensión .jar, por lo que no hay necesidad de realizar una instalación pero debe considerarse su inclusión como argumento de la compilación y ejecución.
+
+			Nombre de la biblioteca: jfreechart-1.0.19.jar
+
+	Instrucciones
+	>>>>>>>>>>>>>
+
+		Derivado de la utilización de bibliotecas en archivos .jar, será necesaria para su compilación especificar la ruta de los archivos. Esto se logra con el argumento de compilación y ejecución '-cp' o '-classpath'
+
+		Para la compilación de la clase SegundPractica.java
+            *************
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java
+            *************
+
+        Para la ejecución del programa donde la clase main está en PrimeraPractica.class
+			*************
+            $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica [argumentos del programa]
+            *************
+
+		
+        Argumentos de ejecución
+        =======================
+            >> args[1](Opcional): precedidos de un guión '-', pueden colocarse los 2, 1 solo o ninguno
+            	** p : se ejecutan los algoritmos que calculan los productos
+            	** c : se ejecutan los algoritmos que calculan los cocientes
+            	** vacío: se ejecutan los dos programas, igual que si el ingreso hubiera sido:
+            		$ ... SegundaPractica -pc archivo_valores
+
+            >> args[2](Obligatorio) - Ruta de un archivo con los datos para ser evaluados
+
+            Ejemplo de uso de parámetros:
+            	************************
+                $ java SegundaPractica -p parejasValores.txt
+                $ java SegundaPractica -c parejasValores.txt
+                $ java SegundaPractica -pc parejasValores.txt
+                ************************
+
+        Formato del Archivo
+        ===================
+            - Solo se aceptan números enteros, comas y barra '/'
+            - No se aceptan caracteres alfabéticos u otros caracteres especiales
+            - Se ignoran espacios, tabulaciones y saltos de línea
+            - El archivo puede tener cualquier extensión
+            - El par de valores deben estar separadas por una coma
+            - Las parejas de números se separan por barra '/'
+
+                Ejemplo de archivo para parejas de números
+                    +++++++++++++++++++
+                    	5,8 / 8,13
+                    +++++++++++++++++++
