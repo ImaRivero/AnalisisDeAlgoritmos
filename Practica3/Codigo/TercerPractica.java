@@ -384,4 +384,61 @@ class NumeroPerfecto {
 		numeroOperaciones = numOpAux;
 		return numerosPerfectos;
 	}
+
+	public ArrayList<Long> esPerfecto(long num){
+		ArrayList<Long> aux = new ArrayList<>();
+		int acum = 0;
+		long numOpAux = 0;
+		numOpAux++;
+		
+        for(int i = 1; i <= (num/2); i++){
+			numOpAux++;
+            if(num % i == 0){
+				acum += i;
+				numOpAux++;
+            }
+        }
+        if(acum == num){
+			numOpAux++;
+			aux.set(0, 1l);
+			aux.set(1, numOpAux);
+			return aux;
+		}
+        else{
+			numOpAux++;
+			aux.set(0, 0l);
+			aux.set(1, numOpAux);
+            return aux;
+		}
+	}
+	
+	public ArrayList<Long>[] mostrarPerfectos2(int num){
+		ArrayList<Long> lista = new ArrayList<>();
+		ArrayList<Long> auxPerfecto = new ArrayList<>();
+		ArrayList<Long>[] salida = new ArrayList[2]; // Array de ArrayList
+
+		Long numOpAux = 0l;
+		int cont = 0;
+		numOpAux++;
+
+		for(long acum = 0l; cont < num; acum++){
+			numOpAux++;
+			auxPerfecto = esPerfecto(acum);
+			if(auxPerfecto.get(0) == 1l){
+				lista.add(acum);
+				cont++;
+			}
+			numOpAux = numOpAux + auxPerfecto.get(1);
+		}
+		salida[0] = lista; // Primer elemento guarda la lista
+		salida[1] = new ArrayList<Long>(); 
+		salida[1].add(numOpAux); // Segundo tiene como unico elemento del array, el numero de operaciones
+
+		System.out.println("Numero de operaciones");
+		System.out.println(numOpAux);
+		System.out.println("Lista");
+		System.out.println(lista);
+
+		return salida;
+	}
 }
