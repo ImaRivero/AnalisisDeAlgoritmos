@@ -384,7 +384,7 @@ class NumeroPerfecto {
 		numeroOperaciones = numOpAux;
 		return numerosPerfectos;
 	}
-	/*
+
 	public Long[] esPerfecto(long num){
 		Long test[] = new Long[2];
 		long numOpAux = 0l;
@@ -422,7 +422,7 @@ class NumeroPerfecto {
 		int cont = 0;
 		numOpAux++;
 
-		for(long acum = 0l; cont < num; acum++){
+		for(long acum = 2; cont < num; acum+=2){
 			numOpAux++;
 			auxPerfecto = esPerfecto(acum);
 			if(auxPerfecto[0] == 1l){
@@ -443,5 +443,4 @@ class NumeroPerfecto {
 
 		return salida;
 	}
-	*/
 }
