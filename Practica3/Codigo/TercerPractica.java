@@ -384,11 +384,12 @@ class NumeroPerfecto {
 		numeroOperaciones = numOpAux;
 		return numerosPerfectos;
 	}
-
-	public ArrayList<Long> esPerfecto(long num){
-		ArrayList<Long> aux = new ArrayList<>();
-		int acum = 0;
-		long numOpAux = 0;
+	/*
+	public Long[] esPerfecto(long num){
+		Long test[] = new Long[2];
+		long numOpAux = 0l;
+		
+		long acum = 0l;
 		numOpAux++;
 		
         for(int i = 1; i <= (num/2); i++){
@@ -400,21 +401,21 @@ class NumeroPerfecto {
         }
         if(acum == num){
 			numOpAux++;
-			aux.set(0, 1l);
-			aux.set(1, numOpAux);
-			return aux;
+			test[0] = 1l;
+			test[1] = numOpAux;
+			return test;
 		}
         else{
 			numOpAux++;
-			aux.set(0, 0l);
-			aux.set(1, numOpAux);
-            return aux;
+			test[0] = 0l;
+			test[1] = numOpAux;
+            return test;
 		}
 	}
 	
 	public ArrayList<Long>[] mostrarPerfectos2(int num){
 		ArrayList<Long> lista = new ArrayList<>();
-		ArrayList<Long> auxPerfecto = new ArrayList<>();
+		Long auxPerfecto[] = new Long[2];
 		ArrayList<Long>[] salida = new ArrayList[2]; // Array de ArrayList
 
 		Long numOpAux = 0l;
@@ -424,12 +425,13 @@ class NumeroPerfecto {
 		for(long acum = 0l; cont < num; acum++){
 			numOpAux++;
 			auxPerfecto = esPerfecto(acum);
-			if(auxPerfecto.get(0) == 1l){
+			if(auxPerfecto[0] == 1l){
 				lista.add(acum);
 				cont++;
 			}
-			numOpAux = numOpAux + auxPerfecto.get(1);
+			numOpAux = numOpAux + auxPerfecto[1];
 		}
+
 		salida[0] = lista; // Primer elemento guarda la lista
 		salida[1] = new ArrayList<Long>(); 
 		salida[1].add(numOpAux); // Segundo tiene como unico elemento del array, el numero de operaciones
@@ -441,4 +443,5 @@ class NumeroPerfecto {
 
 		return salida;
 	}
+	*/
 }
