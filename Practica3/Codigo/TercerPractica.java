@@ -385,62 +385,60 @@ class NumeroPerfecto {
 		return numerosPerfectos;
 	}
 
-	public Long[] esPerfecto(long num){
-		Long test[] = new Long[2];
-		long numOpAux = 0l;
-		
-		long acum = 0l;
-		numOpAux++;
-		
-        for(int i = 1; i <= (num/2); i++){
-			numOpAux++;
-            if(num % i == 0){
-				acum += i;
-				numOpAux++;
+	public static Double[] esPerfecto(double num) {
+        Double test[] = new Double[2];
+        double numOpAux = 0d;
+
+        double acum = 0d;
+        numOpAux++;
+
+        for (int i = 1; i <= (num / 2); i++) {
+            numOpAux++;
+            if (num % i == 0) {
+                acum += i;
+                numOpAux++;
             }
         }
-        if(acum == num){
-			numOpAux++;
-			test[0] = 1l;
-			test[1] = numOpAux;
-			return test;
-		}
-        else{
-			numOpAux++;
-			test[0] = 0l;
-			test[1] = numOpAux;
+        if (acum == num) {
+            numOpAux++;
+            test[0] = 1d;
+            test[1] = numOpAux;
             return test;
-		}
-	}
-	
-	public ArrayList<Long>[] mostrarPerfectos2(int num){
-		ArrayList<Long> lista = new ArrayList<>();
-		Long auxPerfecto[] = new Long[2];
-		ArrayList<Long>[] salida = new ArrayList[2]; // Array de ArrayList
+        } else {
+            numOpAux++;
+            test[0] = 0d;
+            test[1] = numOpAux;
+            return test;
+        }
+    }
 
-		Long numOpAux = 0l;
-		int cont = 0;
-		numOpAux++;
 
-		for(long acum = 2; cont < num; acum+=2){
-			numOpAux++;
-			auxPerfecto = esPerfecto(acum);
-			if(auxPerfecto[0] == 1l){
-				lista.add(acum);
-				cont++;
-			}
-			numOpAux = numOpAux + auxPerfecto[1];
-		}
+    public static HashMap<Integer, ArrayList<Double>> mostrarPerfectos3(int num) {
+        ArrayList<Double> listaAuxiliar[] = new ArrayList[num];
+        Double auxPerfecto[] = new Double[2];
+        HashMap<Integer, ArrayList<Double>> salida = new HashMap<>();
 
-		salida[0] = lista; // Primer elemento guarda la lista
-		salida[1] = new ArrayList<Long>(); 
-		salida[1].add(numOpAux); // Segundo tiene como unico elemento del array, el numero de operaciones
+        double numOpAux = 0d;
+        int cont = 0;
+        numOpAux++;
 
-		System.out.println("Numero de operaciones");
-		System.out.println(numOpAux);
-		System.out.println("Lista");
-		System.out.println(lista);
+        for (double acum = 2; cont < num; acum += 2) {
+            numOpAux++; // contador de verificacion de condicion de for
+            auxPerfecto = esPerfecto(acum);
+            numOpAux++;	// contador de verificacion de condicion de if
+            if (auxPerfecto[0] == 1d) {
+                numOpAux++; // contador de "impresion" 
+                numOpAux++; // contador de incremento de cont
+                listaAuxiliar[cont] = new ArrayList<>();
+                listaAuxiliar[cont].add(acum); // Numero perfecto
+                listaAuxiliar[cont].add(numOpAux);	// Contador de operaciones para conseguirlo
+                salida.put(cont, listaAuxiliar[cont]);
+                //listaAuxiliar.clear();
+                cont++;
+            }
+            numOpAux = numOpAux + auxPerfecto[1];
+        }
 
-		return salida;
-	}
+        return salida;
+    }
 }
