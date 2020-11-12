@@ -55,7 +55,6 @@ public class Archivos{
         }catch(Exception e){
             TercerPractica.error(e.getMessage());
         }
-
         return cadena;
     }
 
@@ -64,7 +63,7 @@ public class Archivos{
         ArrayList<Integer> valores = new ArrayList<Integer>();
         // Se separa la cadena en las cantidad separadas por comas y se guardan como enteros en 
         for(String cantidad:getCadena().split(","))
-                valores.add(new Integer(Integer.parseInt(cantidad)));
+                valores.add( Integer.parseInt(cantidad));
 
         return valores;
     }

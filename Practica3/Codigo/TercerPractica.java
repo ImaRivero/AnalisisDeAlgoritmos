@@ -11,7 +11,6 @@
         + Luis Eduardo Valle Martínez
 */
 
-import java.security.Principal;
 import java.util.*;
 
 public class TercerPractica {
@@ -41,9 +40,10 @@ public class TercerPractica {
 			 * Argumentos(decimal): 
 			 * 	- f(función de fibonacci) = 4 
 			 * 		+ i(iterativo) = 1 
-			 * 		+ r(recursivo) = 2 
+			 * 		+ r(recursivo) = 2
 			 * - p(función número perfecto) = 32
 			 * 		+ e(¿es perfecto?) = 8
+			 * 		+ o(muestra para para opción 'e' 2 gráficas separadas por valores pares e impares) = 64
 			 * 		+ l(lista de n perfectos) = 16
 			 */
 
@@ -84,6 +84,13 @@ public class TercerPractica {
 									TercerPractica.error(
 											"Debes de colocar el argumento 'p' antes de indicar el tipo de función de los números perfectos");
 								break;
+							case 'o':
+								if ((argumentos & 8) > 0)
+									argumentos += 64;
+								else
+									TercerPractica.error(
+											"Debes de colocar el argumento 'e' antes de utilizar este modificador");
+								break;
 							case 'l':
 								if ((argumentos & 32) > 0)
 									argumentos += 16;
@@ -121,32 +128,40 @@ public class TercerPractica {
 					}
 				}
 
-				grafica.crearGrafica("Graficación de los valores n vs tiempo para las funciones de fibonacci",
+				grafica.crearGrafica("Graficación de los valores n vs instrucciones ejecutadas para las funciones de fibonacci",
 						"Valor(n)", "NúmeroOperaciones", indiceColeccion);
 			}
 
 			if ((argumentos & 32) > 0) { // Número perfecto
 				int indiceColeccion = -1;
-				boolean esPerfecto = false;
-				int[] listaPerfectos;
+				double numOperaciones = 0;
 
 				for (Integer valor : valores) {
 
 					if((argumentos & 8) > 0){ // función para saber si un número es perfecto
 						Double aux[] = new Double[2];
 						aux = NumeroPerfecto.esPerfecto(valor);
-						indiceColeccion = grafica.agregarParOrdenado("N evaluado como perfecto", (double)valor, aux[1], indiceColeccion);
+						if(aux[0] == 1)
+							System.out.printf("El número %d si es un número perfecto\n-----------------------\n",valor);
+						if((argumentos & 64) > 0) // Graficación par e impar
+							indiceColeccion = grafica.agregarParOrdenado(((valor % 2) == 0)?"Valores pares de n":"Valores impares de n", (double)valor, aux[1], indiceColeccion);
+						else
+							indiceColeccion = grafica.agregarParOrdenado("N valuado como perfecto", (double)valor, aux[1], indiceColeccion);
 					}
 
 					if((argumentos & 16) > 0){ // Función para listar los primeros n números perfectos
-						HashMap<Integer, ArrayList<Double>> mapa = NumeroPerfecto.mostrarPerfectos3(3);
+						HashMap<Integer, ArrayList<Double>> mapa = NumeroPerfecto.mostrarPerfectos(valor);
+						System.out.printf(" Primeros %d números perfectos\n******************\n",valor);
 						for(int i = 0; i < mapa.size(); i++){
-							indiceColeccion = grafica.agregarParOrdenado("Primeros 4 números perfectos", mapa.get(i).get(0), mapa.get(i).get(1), indiceColeccion);
+							numOperaciones += mapa.get(i).get(1);
+							System.out.printf("%d°: %g\n",i+1,mapa.get(i).get(1));
 						}
+						System.out.println("******************\n");
+						indiceColeccion = grafica.agregarParOrdenado("Primeros n números perfectos",(double)valor, numOperaciones, indiceColeccion);
 					}
 				}
 
-				grafica.crearGrafica("Graficación de los valores n vs tiempo para la funcion esPerfecto()",
+				grafica.crearGrafica("Graficación de los valores n vs instrucciones ejecutadas para las funciones de números perfectos",
 				"Valor(n)", "NúmeroOperaciones", indiceColeccion);
 			}
 
@@ -226,7 +241,7 @@ class NumeroPerfecto {
     }
 
 
-    public static HashMap<Integer, ArrayList<Double>> mostrarPerfectos3(int num) {
+    public static HashMap<Integer, ArrayList<Double>> mostrarPerfectos(int num) {
         ArrayList<Double> listaAuxiliar[] = new ArrayList[num];
         Double auxPerfecto[] = new Double[2];
         HashMap<Integer, ArrayList<Double>> salida = new HashMap<>();
@@ -246,7 +261,7 @@ class NumeroPerfecto {
                 listaAuxiliar[cont].add(acum); // Numero perfecto
                 listaAuxiliar[cont].add(numOpAux);	// Contador de operaciones para conseguirlo
                 salida.put(cont, listaAuxiliar[cont]);
-                //listaAuxiliar.clear();
+				//listaAuxiliar.clear();
                 cont++;
             }
             numOpAux = numOpAux + auxPerfecto[1];

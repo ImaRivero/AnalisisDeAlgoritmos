@@ -1,5 +1,5 @@
 +-----------------------------------------+
-| Segunda práctica de Análisis Algoritmos |
+| Tercera práctica de Análisis Algoritmos |
 +-----------------------------------------+
     ----------------
     REFRENCIA RÁPIDA
@@ -13,36 +13,38 @@
 
         La ejecución se debe realizar se realizará en dependencia de los argumentos ingresados:
 
-            Ejecución de solo algoritmos de productos
+            Ejecución de los algoritmos de Fibonacci
+            ----------------------------------------
+                Para la ejecución exclusiva de los algoritmos que muestran el número en la n posición de la sucesión de Fibonacci, se debe de especificar como primer argumento el valor 'f' y un segundo que indica si se realizará de manera iterativa o recursiva:
+
+                    Iterativa
+                    *********
+                    $ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica -fi ../Archivos/valoresFibonacci
+                    *********
+
+                    Recursiva
+                    *********
+                    $ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica -fr ../Archivos/valoresFibonacci
+                    *********
+
+            Ejecución de los algoritmos de números Perfectos
             -----------------------------------------
-                Para la ejecución exclusiva de los algoritmos que calcúlan el producto de 2 enteros, se debe de especificar como primer argumento el valor 'c', tal comando sería el siguiente:
-
+                Para la ejecución exclusiva de los algoritmos relacionados a los números perfectos se debe de especificar como primer argumento el valor 'p' y un segundo para indicar si se quiere evaluar una lista para conocer si son perfectos, o una lista que genere los n primeros números:
+                    
+                    ¿Es Perfecto?
                     *************
-                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -p ../Archivos/valoresProductos
+                    $ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica -pe ../Archivos/valoresEsPerfecto
                     *************
-
-            Ejecución de solo algoritmos de cocientes
-            -----------------------------------------
-                Para la ejecución exclusiva de los algoritmos que calcúlan el cociente de 2 enteros, se debe de especificar como primer argumento el valor 'p', tal comando sería el siguiente:
-
-                    *************
-                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -c ../Archivos/valoresCocientes
+                    
+                    División en números pares e impares para ¿Es Perfecto?
+                    ******************************************************
+                    $ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica -peo ../Archivos/valoresEsPerfecto-ParesImpares
                     *************
 
-                    *************
-
-            Ejecución de ambos tipos de algoritmos
-            ---------------------------------------
-                Para la ejecución de los algoritmos que calculan el producto y el cociente para 2 enteros, es posible conseguirlo especificando en el primer argumento los 2 valores 'pc' o evitando colocarlos:
-
-                    *************
-                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java -pc ../Archivos/valoresCocientes
-                    *************
-
-                    *************
-                    $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java ../Archivos/valoresCocientes
-                    *************
-
+                    Mostrar Perfectos
+                    *****************
+                    $ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica -pl ../Archivos/valoresListaPerfectos
+                    *****************
 _____________________________
 
 	Bibliotecas
@@ -63,42 +65,44 @@ _____________________________
 
 		Para la compilación de la clase SegundPractica.java
             *************
-            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica.java
+            $ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica.java
             *************
 
         Para la ejecución del programa donde la clase main está en PrimeraPractica.class
 			*************
-            $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar SegundaPractica [argumentos del programa]
+            $ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar TercerPractica [argumentos del programa]
             *************
 
-		
         Argumentos de ejecución
         =======================
-            >> args[1](Opcional): precedidos de un guión '-', pueden colocarse los 2, 1 solo o ninguno
-            	** p : se ejecutan los algoritmos que calculan los productos
-            	** c : se ejecutan los algoritmos que calculan los cocientes
-            	** vacío: se ejecutan los dos programas, igual que si el ingreso hubiera sido:
-            		$ ... SegundaPractica -pc archivo_valores
+            >> args[1](Opcional): precedidos de un guión '-', se debe colocar una combinacion de al menos 2 y máximo 3:
+            	** f : se especifica la ejecución de la sección de algoritmo de Fibonacci
+                    - i: Fibonacci iterativo
+                    - r: Fibonacci recursivo
+            	** p : se especifica la ejecución de la sección de algoritmo de números perfectos:
+                    - e: algoritmo para identificar si un número es perfecto
+                        + o: división de los valores en pares e impares
+                    - l: algoritmo que muestra los primeros n números perfectos
 
             >> args[2](Obligatorio) - Ruta de un archivo con los datos para ser evaluados
 
             Ejemplo de uso de parámetros:
             	************************
-                $ java SegundaPractica -p parejasValores.txt
-                $ java SegundaPractica -c parejasValores.txt
-                $ java SegundaPractica -pc parejasValores.txt
+                $ java TercerPractica -fi valores.txt
+                $ java TercerPractica -pe valores.txt
+                $ java TercerPractica -peo valores.txt
                 ************************
 
         Formato del Archivo
         ===================
-            - Solo se aceptan números enteros, comas y barra '/'
+            - Solo se aceptan números enteros y comas 
             - No se aceptan caracteres alfabéticos u otros caracteres especiales
             - Se ignoran espacios, tabulaciones y saltos de línea
             - El archivo puede tener cualquier extensión
-            - El par de valores deben estar separadas por una coma
-            - Las parejas de números se separan por barra '/'
+            - El par de valores deben estar separadas por la coma
 
-                Ejemplo de archivo para parejas de números
+                Ejemplo de archivo
                     +++++++++++++++++++
-                    	5,8 / 8,13
+                    	5, 8, 
+                        10 ,13
                     +++++++++++++++++++
