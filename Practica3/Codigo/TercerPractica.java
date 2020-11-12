@@ -133,33 +133,21 @@ public class TercerPractica {
 				for (Integer valor : valores) {
 
 					if((argumentos & 8) > 0){ // función para saber si un número es perfecto
-						esPerfecto = NumeroPerfecto.getNumeroPerfecto().isPerfecto(valor);
-						if(esPerfecto) {
-							// Se van a mostrar los dividendos del número
-							System.out.printf("%d es un número perfecto\n  Dividendos \n ------------\n",valor);
-							for(Integer dividendo:NumeroPerfecto.getNumeroPerfecto().dividendos)
-								System.out.printf("    -> %d\n",dividendo);
-						}
-						indiceColeccion = grafica.agregarParOrdenado("N evaluado como perfecto", (double) valor,NumeroPerfecto.numeroOperaciones, indiceColeccion);
+						Double aux[] = new Double[2];
+						aux = NumeroPerfecto.esPerfecto(valor);
+						indiceColeccion = grafica.agregarParOrdenado("N evaluado como perfecto", (double)valor, aux[1], indiceColeccion);
 					}
 
 					if((argumentos & 16) > 0){ // Función para listar los primeros n números perfectos
-						listaPerfectos = NumeroPerfecto.getNumeroPerfecto().mostrarPerfectos(valor);
-						System.out.printf("\nLista de los %d primeros números perfectos\n----------------------------------------\n",valor);
-						for(int i=0;i<valor;i++){
-							System.out.printf("%d°. %d\n",i+1,listaPerfectos[i]);
+						HashMap<Integer, ArrayList<Double>> mapa = NumeroPerfecto.mostrarPerfectos3(3);
+						for(int i = 0; i < mapa.size(); i++){
+							indiceColeccion = grafica.agregarParOrdenado("Primeros 4 números perfectos", mapa.get(i).get(0), mapa.get(i).get(1), indiceColeccion);
 						}
-						// Se van a mostrar los dividendos del último número
-						System.out.printf("  Dividendos de %d \n ------------\n",listaPerfectos[listaPerfectos.length -1]);
-						for(Integer dividendo:NumeroPerfecto.getNumeroPerfecto().dividendos)
-							System.out.printf("    -> %d\n",dividendo);
-						System.out.println("\n");
-						indiceColeccion = grafica.agregarParOrdenado("Primeros n números perfectos", (double) valor,NumeroPerfecto.numeroOperaciones, indiceColeccion);
 					}
 				}
 
-				grafica.crearGrafica("Graficación de los valores n vs tiempo para las funciones de fibonacci",
-						"Valor(n)", "NúmeroOperaciones", indiceColeccion);
+				grafica.crearGrafica("Graficación de los valores n vs tiempo para la funcion esPerfecto()",
+				"Valor(n)", "NúmeroOperaciones", indiceColeccion);
 			}
 
 			grafica.mostrarGrafica();
@@ -209,181 +197,6 @@ class Fibonacci {
 
 // Clase con las funciones para identificar y enlistar números perfectos
 class NumeroPerfecto {
-	protected static ArrayList<Integer> historialPerfectos;
-	
-	public ArrayList<Integer> dividendos;
-	protected static int numeroOperaciones;
-
-	static NumeroPerfecto instancia = null;
-
-	private NumeroPerfecto(){
-		historialPerfectos = new ArrayList<Integer>();
-		numeroOperaciones = 0;
-		dividendos = new ArrayList<Integer>();
-	}
-
-	// Permite obtener la única instancia de la clase
-	public static NumeroPerfecto getNumeroPerfecto(){
-		if(NumeroPerfecto.instancia == null)
-			NumeroPerfecto.instancia = new NumeroPerfecto();
-		return NumeroPerfecto.instancia;
-	}
-
-	public void resetNumeroOperaciones() {
-		numeroOperaciones = 0;
-	}
-
-	// Permite conocer si un número 'n' es perfecto y se ha guardado en la lista
-	public boolean isPerfectoGuardado(int n) {
-		if(! historialPerfectos.isEmpty()){
-			if (historialPerfectos.get(busquedaBinaria(historialPerfectos, n, historialPerfectos.size() - 1, 0)) == n)
-				return true;
-		} return false;
-	}
-
-	// Agrega
-	public void agregarPerfecto(int n) {
-		if (historialPerfectos.isEmpty())
-			historialPerfectos.add(n);
-		else {
-			int posicion = busquedaBinaria(historialPerfectos, n, historialPerfectos.size() - 1, 0);
-			if (historialPerfectos.get(posicion) != n)
-				historialPerfectos.add(posicion, n);
-		}
-	}
-
-	// Mediante divisiones consecutivas del arreglo encuentra la posición actual del
-	// número 'n'
-	// En caso de no existir el número en el arreglo regresa la posición donde
-	// debería de ser ingresado
-	public int busquedaBinaria(ArrayList<Integer> arreglo, int n, int superior, int inferior) {
-		if (superior < inferior) { // Indica la posición donde debe de ir el número 'n'
-			numeroOperaciones++;
-			return (inferior <= arreglo.size()-1)?inferior:superior;
-		} else {
-			int medio = (int) ((superior + inferior) / 2);
-			numeroOperaciones++;
-
-			if (arreglo.get(medio) < n) {
-				numeroOperaciones++;
-				return busquedaBinaria(arreglo, n, superior, medio + 1);
-			} else if (arreglo.get(medio) > n) {
-				numeroOperaciones++;
-				return busquedaBinaria(arreglo, n, medio - 1, inferior);
-			} else {// De otra forma significa que el número de en medio es igual a 'n'
-				numeroOperaciones++;
-				return medio;
-			} 
-		}
-	}
-
-	// Función que permite identificar si un número es perfecto(la suma de sus
-	// dividendos es igual al número)
-	public boolean isPerfecto(int n) {
-		if (isPerfectoGuardado(n))
-			return true;
-		else if(n <= 3)
-			return false;
-
-		int iterador = 1, sumaDividendos = 0, posicionAux = 1, numOpAux = 0, dividendo = 0;
-		double cociente;
-		numOpAux++;
-		dividendos.clear(); // Se ingresan los 2 primeros dividendos que forzosamente debe de tener un número perfecto
-		dividendos.add(1);
-		dividendos.add(2);
-		numOpAux++;
-
-
-		while (iterador < dividendos.size()) {// Se iterará cada elemento ingresado en los dividendos mientras a su vez
-												// generan más dividendos
-			cociente =(double) n;
-			dividendo = dividendos.get(iterador);
-			numOpAux++;
-
-			while ((cociente % dividendos.get(iterador)) == 0.0) { // Se itera hasta obtener un resido diferente a 0
-				cociente =(double)cociente / dividendo;
-				numOpAux++;
-				posicionAux = busquedaBinaria(dividendos, (int)cociente, dividendos.size() - 1, 0); // Se obtiene la posición
-																								// del 'n' en el arreglo
-																								// o donde debería
-																								// colocarse
-				numOpAux += numeroOperaciones;
-				resetNumeroOperaciones();
-				if (dividendos.get(posicionAux) !=(int)cociente && (int)cociente > 0) { // Se verifica que el elemento no exista ya
-					if(dividendos.get(posicionAux) < (int)cociente){
-						posicionAux ++;
-						numOpAux ++;
-					}
-					dividendos.add(posicionAux,(int)cociente);
-					numOpAux++;
-					sumaDividendos += cociente;
-					numOpAux++;
-				}
-			}
-
-			iterador++;
-			numOpAux++;
-		}
-
-		numOpAux++;
-		numeroOperaciones = numOpAux;
-		if (sumaDividendos+3 == n) {
-			agregarPerfecto(n);
-			return true;
-		}
-
-		return false;
-	}
-
-	// Función que muestra los primeros 'n' números perfectos
-	public int[] mostrarPerfectos(int n) {
-		int numOpAux = 0, cantidad = 6, nAux = n;
-		numOpAux++;
-		int[] numerosPerfectos = new int[n];
-		numOpAux++;
-
-		while (nAux > 0) {
-			if (isPerfecto(cantidad)) {
-				numerosPerfectos[n - nAux] = cantidad;
-				numOpAux++;
-				nAux--;
-				numOpAux++;
-			}
-			numOpAux += numeroOperaciones; // Se suman las operaciones de la función 'isPerfecto'
-			cantidad += 2;
-			resetNumeroOperaciones();
-		}
-
-		numeroOperaciones = numOpAux;
-		return numerosPerfectos;
-	}
-
-	private double formulaPerfectosPrimos(int n){
-		return (Math.pow(2, n-1)) * (Math.pow(2, n) -1);
-	}
-
-	// Función que muestra los primeros 'n' números perfectos a partir de la ecuación probada de Euclides
-	// númeroPerfecto = 2^(n − 1) * ( 2^n − 1 )
-	public int[] mostrarPerfectosPrimos(int n) {
-		int numOpAux = 0, nAux = 1, perfecto = 0;
-		numOpAux++;
-		int[] numerosPerfectos = new int[n];
-		numOpAux++;
-
-		while (nAux < n) {
-			perfecto = (int)formulaPerfectosPrimos(nAux+1);
-			if (isPerfecto(perfecto)) {
-				numerosPerfectos[nAux] = perfecto;
-				numOpAux++;
-			}
-			numOpAux += numeroOperaciones; // Se suman las operaciones de la función 'isPerfecto'
-			nAux ++;
-			resetNumeroOperaciones();
-		}
-
-		numeroOperaciones = numOpAux;
-		return numerosPerfectos;
-	}
 
 	public static Double[] esPerfecto(double num) {
         Double test[] = new Double[2];
