@@ -168,13 +168,13 @@ public class CuartaPractica {
 			if ((argumentos & 4) > 0) { // Algoritmo Partition
 				int indiceColeccion = -1,
 				punto = 1;
-
+				int out = -1;
 				System.out.println("\n Partition  \n---------------");
 				for (Integer n : listaN) {
 
-					//int[]A = Arreglos.crearArreglo(n);
+					int[]A = Arreglos.crearArreglo(n);
 					AlgoritmosOrdenamiento.numeroOperaciones = 0;
-					//A = AlgoritmosOrdenamiento.MergeSort(A,0,n-1);
+					out = AlgoritmosOrdenamiento.Partition(A,0,n-1);
 
 					System.out.printf(" P%d( %d ,%g )\n",punto,n,AlgoritmosOrdenamiento.numeroOperaciones);
 					punto ++;
@@ -185,6 +185,7 @@ public class CuartaPractica {
 						AlgoritmosOrdenamiento.numeroOperaciones, 
 						indiceColeccion);
 				}
+				System.out.printf("Salida de partition: %d\n", out);
 
 				grafica.crearGrafica(
 					"Graficación del tamaño n del arreglo vs instrucciones ejecutadas para el algoritmo Partition",
@@ -200,11 +201,11 @@ public class CuartaPractica {
 				System.out.println("\n QuickSort  \n---------------");
 				for (Integer n : listaN) {
 
-					//int[]A = Arreglos.crearArreglo(n);
+					int[]A = Arreglos.crearArreglo(n);
 					AlgoritmosOrdenamiento.numeroOperaciones = 0;
-					//A = AlgoritmosOrdenamiento.MergeSort(A,0,n-1);
+					A = AlgoritmosOrdenamiento.QuickSort(A,0,n-1);
 
-					System.out.printf(" P%d( %d ,%d )\n",punto,n,AlgoritmosOrdenamiento.numeroOperaciones);
+					System.out.printf(" P%d( %d ,%g )\n",punto,n,AlgoritmosOrdenamiento.numeroOperaciones);
 					punto ++;
 
 					indiceColeccion = grafica.agregarParOrdenado(
@@ -301,10 +302,70 @@ class AlgoritmosOrdenamiento{
 		}
 		return A;
 	}
+
+	/**
+	 *  Divide el arreglo en dos subarreglos. Toma el último elemento
+	 *  del arreglo como pivote, lo coloca en la posicion correcta del arreglo
+	 *  ordenado, coloca todos los elementos menores al pivote a la izquierda
+	 *  del pivote y los elementos mayores al pivote a su derecha.
+	 * 
+	 * @param arr_ent arreglo de entrada.
+	 * @param prim posicion del primer elemento del arreglo.
+	 * @param ult posicion del último elemento del arreglo.
+	 * @return posicion del pivote
+	 */
 	
-	public static void Partition(){}
-	
-	public static void QuickSort(){}
+	public static int Partition(int arr_ent[], int prim, int ult){
+		int pivote = arr_ent[ult];
+		int i = (prim - 1);
+		numeroOperaciones +=1;
+
+		for(int j = prim; j < ult; j++){
+			if(arr_ent[j] < pivote){
+				i++;
+
+				// exchange
+				int tmp = arr_ent[i];
+				arr_ent[i] = arr_ent[j];
+				arr_ent[j] = tmp;
+
+				numeroOperaciones +=1;
+			}
+			numeroOperaciones +=1;
+		}
+
+		// exchange
+		int tmp = arr_ent[i+1];
+		arr_ent[i+1] = arr_ent[ult];
+		arr_ent[ult] = tmp;
+		numeroOperaciones +=1;
+		return i+1;
+	}
+
+	/**
+	 * Metodo principal para ejecutar el ordenamiento por QuickSort.
+	 * Utiliza el metodo Partition para generar subarreglos.
+	 * 
+	 * @param arr_ent arreglo a ordenar.
+	 * @param prim posicion del primer elemento del arreglo.
+	 * @param ult posicion del ultimo elemento del arreglo.
+	 * @return arreglo ordenado
+	 */
+
+	public static int[] QuickSort(int arr_ent[], int prim, int ult){
+		if(prim < ult){
+			int p = Partition(arr_ent, prim, ult);
+			numeroOperaciones +=1;
+			// Ordena de forma recursiva los elementos del arreglo
+			// antes y después de la posicion del pivote
+			QuickSort(arr_ent, prim, p-1);
+			numeroOperaciones +=1;
+			QuickSort(arr_ent, p+1, ult);
+			numeroOperaciones +=1;
+		}
+		numeroOperaciones +=1;
+		return arr_ent;
+	}
 }
 
 // Clase con método para la creación de arreglos con números aleatorios
