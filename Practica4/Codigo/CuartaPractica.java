@@ -176,7 +176,7 @@ public class CuartaPractica {
 					AlgoritmosOrdenamiento.numeroOperaciones = 0;
 					out = AlgoritmosOrdenamiento.Partition(A,0,n-1);
 
-					System.out.printf(" P%d( %d ,%g )\n",punto,n,AlgoritmosOrdenamiento.numeroOperaciones);
+					System.out.printf(" P%d( %d ,%d )\n",punto,n,(int)AlgoritmosOrdenamiento.numeroOperaciones);
 					punto ++;
 
 					indiceColeccion = grafica.agregarParOrdenado(
@@ -201,11 +201,12 @@ public class CuartaPractica {
 				System.out.println("\n QuickSort  \n---------------");
 				for (Integer n : listaN) {
 
-					int[]A = Arreglos.crearArreglo(n);
+					//int[]A = Arreglos.crearArreglo(n);
+					int[]A = Arreglos.crearArregloOrdenado(n);
 					AlgoritmosOrdenamiento.numeroOperaciones = 0;
 					A = AlgoritmosOrdenamiento.QuickSort(A,0,n-1);
 
-					System.out.printf(" P%d( %d ,%g )\n",punto,n,AlgoritmosOrdenamiento.numeroOperaciones);
+					System.out.printf(" P%d( %d ,%d )\n",punto,n,(int)AlgoritmosOrdenamiento.numeroOperaciones);
 					punto ++;
 
 					indiceColeccion = grafica.agregarParOrdenado(
@@ -386,5 +387,15 @@ class Arreglos{
 		array = AlgoritmosOrdenamiento.MergeSort(array, 0, separador-1);
 		array = AlgoritmosOrdenamiento.MergeSort(array, separador, n-1);
 		return array;
+	}
+
+	// Elementos distintos ordenados de manera decreciente.
+	public static int[] crearArregloOrdenado(int n){
+		int out[] = new int[n];
+		for(int i = 0; i < n; i++){
+			out[i] = n;
+			n--;
+		}
+		return out;
 	}
 }
