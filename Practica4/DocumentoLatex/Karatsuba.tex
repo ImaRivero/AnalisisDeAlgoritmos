@@ -1,0 +1,128 @@
+El algoritmo de Karatsuba, es un algoritmo veloz para la multiplición de números muy grandes.Karatsuba fué un matemático ruso graduado de la Facultad de Mecánica y Matemáticas de la Universidad Estatal de Moscú y que obtuvo su doctorado en matemáticas en el año de 1962 con la tesis "Suma de razones trigonométricas y Teoremas del valor medio".\\
+
+En el año de 1960 descubrió el algoritmo y lo publicó en el año de 1962. Este algoritmo permite reducir la multiplicación de 2 números de n dígitos a como máximo $3n^{log_23} \approx 3n^{1.585}$ multiplicaciones de un dígito, siendo por lo tanto más rápido que el algoritmo clásico, el cual requiere de $n^2$ productos de un dígito.\\
+
+\textbf{El problema}
+
+    Son dados 2 números enteros \textit{x,y}, los 2 tiene un largo de dígitos igual a \textit{n}. Se necesita encontrar el producto de estos 2 números.
+    
+    El tamaño del problema es \textit{n}. Mientras más dígitos en \textit{x,y} más difícil es el problema.
+    
+    La llave para entender el algoritmo de multiplicación de Karatsuba está en recordad que se puede expresar a \textit{x}(un entero con \textit{n} dígitos) de la siguiente forma:
+    $$
+        x=ax10^{\frac{n}{2}}+b
+    $$
+    
+    Esta representación puede ser utilizada para multiplicar \textit{x} por otro entero de \textit{n} dígitos como \textit{y}.
+    $$
+        y=c+10^{\frac{n}{2}}+d
+    $$
+    
+    Entonces la multiplicación puede ser escrita como:
+    \begin{equation*}
+        \begin{split}
+             xy & =(ax10^{\frac{n}{2}}+b)(c+10^{\frac{n}{2}}+d) \\
+             & =ac*10^n + (ad+bc)*10^{\frac{n}{2}}+bd
+        \end{split}
+    \end{equation*}
+    
+    Aquí es donde Karatsuba encontró un nuevo método. Encontro una forma de calcular \textit{ac,bd} y \textit{ad+bc} con solo 3 multiplicaciones en vez de 4
+    $$
+        (a+b)(c+d)=ac+ad+bc+bd
+    $$
+    
+    Si ya has calculado \textit{ac} y luego \textit{bd} entonces \textit{(ab+bc)} puede ser calculado al sustraer \textit{ac} y \textit{bd} de \textit{(a+b)(c+d)}:
+    $$
+        (a+b)(c+d)-ac-bd=ad+bc
+    $$
+    Esto puede utilizarse para la multiplicación computacional recursiva.\\
+    
+    El algoritmo de Karatsuba se divide en 8 pasos:
+    \begin{enumerate}
+        \item Separar los 2 enteros \textit{x,y} en \textit{a,b,c,d} como se describe a continuación
+        \item Calcular recursivamente \textit{ac}
+        \iem Calcular recursivamente \textit{bd}
+        \item Calcular recursivamente \textit{(a+b)(c+d)}
+        \item Calcular \textit{(ab+bc)} como \textit{(a+b)(c+d)-ac-bd}
+        \item Sea A \textit{ac} con n ceros añadidos al final
+        \item Sea B \textit{(ab+bc)} con mitad de ceros añadidos al final
+        \item La respuesta final es \textit{A+B+bd}
+    \end{enumerate}
+    
+    Por "Cálculo recursivo" se refiere a llamar al algoritmo otra vez para calcular las multiplicaciones.Para la recursión siempre es necesario un caso base que prevenga un ciclo sin fin. el caso base aquí puede se cuando los 2 enteros sean de 1 solo dígito. En este caso el algoritmo solo calcula y regresa el producto.\\
+    
+    A continuación en la figura \ref{CodigoKaratsuba} se muestra el código de la función:
+    \begin{figure}[h!]
+        \centering
+    \begin{verbatim}
+        def MultiplcacionKaratsuba(x,y):
+        x = str(x)
+        y = str(y)
+
+        #Caso base
+        if len(x) == 1 and len(y) == 1:
+            return int(x) * int(y)
+
+        if len(x) < len(y):
+            x = zeroPad(x, len(y) - len(x))
+        elif len(y) < len(x):
+            y = zeroPad(y, len(x) - len(y))
+
+        n = len(x)
+        j = n//2
+        
+        #Para enteros de dígitos pares
+        if (n % 2) != 0:
+            j += 1    
+
+        BZeroPadding = n - j
+
+        AZeroPadding = BZeroPadding * 2
+
+        a = int(x[:j])
+        b = int(x[j:])
+        c = int(y[:j])
+        d = int(y[j:])
+
+        #Cálculo recursivo
+        ac = MultiplicacionKaratsuba(a, c)
+        bd = MultiplicacionKaratsuba(b, d)
+        k = MultiplicacionKaratsuba(a + b, c + d)
+
+        A = int(zeroPad(str(ac), AZeroPadding, False))
+        B = int(zeroPad(str(k - ac - bd), BZeroPadding, False))
+
+        return A + B + bd
+    \end{verbatim}
+        \caption{Código del algoritmo de Karatsuba implementado en el leguaje Python}
+        \label{CodigoKaratsuba}
+    \end{figure}
+    
+    Para encontrar una cota superior en el tiempo de ejecución del algoritmo, es posible utilizar el teorema maestro.
+    
+    La ecuacion de recursividad para el algoritmo es la siguiente:
+    \begin{equation*}
+        T(n)=3T\left(\frac{n}{2}\right)+\Theta(n)
+    \end{equation*}
+    
+    \hfill \break
+    
+    De donde se identifican los elemento:\\
+    $a=3$\\
+    $b=2$\\
+    $f(n)=cn$\\
+    Y procedemos a evaluar los requisitos del problema maestro:
+            \begin{equation*}
+                n^{log_ba}=n^{log3}
+            \end{equation*}
+            Se verifica entonces con respecto a \textbf{f(n)}:
+            \begin{equation*}
+                n^{log3-0.585}=n^{log_ba-\epsilon}=f(n)=n
+            \end{equation*}
+            
+            Por lo tanto, mediante el caso \textbf{I} del teorema maestro:
+            \begin{equation*}
+                T(n) = \Theta (n^{log_ba}) = \Theta(n^{log3}) = \Theta(n^{1.585} )
+            \end{equation*}
+            
+    \newpage

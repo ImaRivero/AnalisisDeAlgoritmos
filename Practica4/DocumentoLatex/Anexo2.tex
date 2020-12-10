@@ -1,0 +1,277 @@
+\section*{Problemas de videos}
+    \subsection*{Clase 13}
+        \textbf{Probar mediante sustitución hacia atrás que el algoritmo MergeSort,} $T(n) \in \Theta(nlogn)$ \\
+            Se considera la siguiente ecuación de recursividad:
+            \begin{equation*}
+                \quad T(n)=
+                \left\{
+                \begin{array}{lc}
+                    \Theta(1) & n=1 \\
+                    2T\left(\frac{n}{2} \right)+\Theta(n) & n>1
+                \end{array}
+                \right.
+            \end{equation*}
+            
+            Se realiza un cambio de variable de la forma:
+            \begin{equation*}
+                \begin{split}
+                    n=2^k \\
+                    k=logn
+                \end{split}
+            \end{equation*}
+            Y se realiza la sustitución en la ecuación de recursividad:
+            \begin{equation*}
+                \quad T(2^k)=
+                \left\{
+                \begin{array}{lc}
+                    \Theta(1) & k=0 \\
+                    2T\left(2^{(k-1)} \right)+c2^k & k>0
+                \end{array}
+                \right.
+            \end{equation*}
+        
+        Por sustitución hacia atrás:
+        \begin{equation*}
+            \begin{split}
+                T(2^k) & =2T\left(2^{k-1}\right)+c2^k \\
+                & = 2[2T\left(2^{k-2}\right)+c2^{k-1}]+c2^{k} = 2^2T\left(2^{k-2}\right)+c2^{k}+c2^{k} \\
+                & = 2^2[2T\left(2^{k-3}\right)+c2^{k-2}]+c2^k +c2^k =  2^3T\left(2^{k-3}\right)+c2^{k}+c2^{k}+c2^{k}\\
+                \dots \\
+                & = 2^iT\left(2^{k-i}\right)+ci2^k\text{ Para i con valor en frontera }k-i=0\rightarrow k=i\\
+                & = 2^k+ck2^k \text{ Regresando a n:}\\
+                T(n) & =n+cnlogn\\
+                \therefore \textbf{T(n)}\in \Theta\textbf{(nlogn)}
+            \end{split}
+        \end{equation*}
+    
+    \subsection*{Clase 14}
+        \subsubsection*{Peor Caso}
+            \textbf{Utilizando decremento por uno, pruebe que} $T(n) \in \Theta(n^2)$\\
+            Recordamos que nuestra ecuación de recursividad está dada por:
+            \begin{figure}
+                \centering
+                \begin{equation*}
+                    T(n) = T(q)+T(n-q)+\Theta(n) \text{ Donde \textbf{q}, es la posición del pivote en el arreglo}
+                \end{equation*}
+                \caption{Ecuación de recursividad del algoritmo QuickSort}
+                \label{EcuacionQuickSort}
+            \end{figure}
+            Por esta razón, el peor caso para este algoritmo se da cuando el pivote \textbf{q} es el primer o último elemento, pudiendo tener los valores: \textbf{1} o \textbf{n-1}.\\
+            
+            Al sustituir en nuestra ecuación \ref{EcuacionQuickSort}, vemos que cualquiera de los dos valores nos da la ecuación que vamos a analizar:
+            \begin{equation*}
+                T(n)=T(1)+T(n-1)+\Theta(n) = T(n-1)+c(n+1)
+            \end{equation*}
+            
+            Iniciamos mediante decremento por uno
+            Se identifica \textbf{f(n) = c(n+1)}, y se plantea la ecuación según el método:
+            $T(n)=T(1)+\sum_{j=1}^nf(j)$\\
+            Sustituyendo la f(n) \\
+            \begin{equation*}
+                   T(n)= T(1)+\sum_{j=1}^nc(j+1)=c+c\left[ \sum_{j=1}^nj +\sum_{j=1}^n1\right] = c+c\left[ \frac{n(n+1)}{2} -n \right]=c+cn+c\frac{n^2+n}{2}
+            \end{equation*}
+            \begin{equation*}
+                   \therefore \text{\textbf{T(n)}}\in\Theta(n^2)
+            \end{equation*}
+            
+        \subsubsection*{MejorCaso}
+            En la situación que se da el mejor caso, se considerada cuando el valor del pivote divide al arreglo por la mitad. De tal forma, se considerar a \textbf{q=$\frac{n}{2}$}, y sustituimos en la ecuación \ref{EcuacionQuickSort}:
+            \begin{equation*}
+                T(n)=T\left(\frac{n}{2}\right)+T\left(n-\frac{n}{2}\right)+\Theta(n) =2T\left(\frac{n}{2}\right)+\Theta(n)
+            \end{equation*}
+            
+            Identificamos los elementos de la ecuacion:\\
+            $a=2$\\
+            $b=2$\\
+            $f(n)=\Theta(n) = cn$\\
+            Y procedemos a evaluar los requisitos del problema maestro:
+            \begin{equation*}
+                n^{log_ba}=n^{log2}=n
+            \end{equation*}
+            Se verifica entonces con respecto a \textbf{f(n)}:
+            \begin{equation*}
+                n=n^{log_ba}=f(n)=n
+            \end{equation*}
+            
+            Por lo tanto, mediante el caso \textbf{II} del teorema maestro:
+            \begin{equation*}
+                T(n) = \Theta (n^{log_ba}logn) = \Theta(nlogn)
+            \end{equation*}
+    
+\section*{Problema 1}
+    \textbf{¿Que valor de q retorna Partition cuando todos los elementos en el arreglo A[p,...,r] tienen el mismo valor?}\\
+    
+    \hfill \break
+    
+    Para identificar el valor que retorna como pivote la función \textbf{Partition} se analiza su algoritmo:
+    \begin{figure}
+        \centering\begin{verbatim}
+        1|  x = A[r]
+        2|  i = p-1
+        3| 
+        4|  for j=p to j<=r-1 do
+        5|     if A[j] <= x
+        6|         i++
+        7|         exchange(A[i],A[j])
+        8|  exchange(A[i+1],A[r])
+        9|  return i+1
+    \end{verbatim}
+        \caption{Pseudocodigo de la función Partition con las lineas numeradas}
+        \label{PseudocodigoPartitionNumerado}
+    \end{figure}
+    
+    El valor que retorna el algoritmo será \textbf{i+1}, por lo que es necesario conocer en que condiciones la i cambia su posición. Es claro que en la primer iteración de j, el valor de i no lo ubica dentro del arreglo que se analiza, pero este cambiará su posición cuando el valor en la posición \textbf{j} sea menor al del pivote(último elemento).\\
+    
+    En el caso que nos interesa, todos los elementos del arreglo tienen el mismo valor, por lo que el pivote y el primer elemento al iniciar la iteración serán el mismo. En la línea \textit{5} del algoritmo \ref{PseudocodigoPartitionNumerado}, que la condición del \textit{if} ejecuta sus líneas interiores cuando el valor en \textbf{j} es menor o igual al pivote, donde en nuestro caso será en todas las ocaciones. De esta forma el valor de \textit{i} seguirá aumentando en cada iteración, terminando con el mismo valor que \textbf{j} al final del ciclo. Según la configuración de ciclo \textit{for}, el último valor que \textbf{j} tomará será \textbf{r-1}, osea una casilla anterior al pivote, dando el mismo valor a \textbf{i} en su última iteración.\\
+    
+    En la instrucción \textit{9}, se devulve la posición del pivote mediante $i+1$, y considerado el análisis anterior, sustituimos el valor de \textbf{i} por \textbf{r-1}:
+    $$pivote = i-1 = r-1+1 = r$$
+    \textbf{Resultando finalmente que el valor retornado como la posición del pivote para un arreglo con todos sus valores iguales, será la última posición, la misma que la posición incial considerada para el pivote.}
+    
+    \subsection*{Prueba de escritorio}
+    \begin{figure}[h!]
+        \centering
+        \begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
+            & & & & {\small Pivote} \\\cline{2-5}
+            & \multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} \\ \cline{2-5}
+            \textbf{i} & \textbf{j} & & & \\
+        \end{tabular}
+        \caption{Arreglo de 4 elementos con todos sus valores iguales\\Representación del arreglo antes de las iteraciones}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[h!]
+        \centering
+        \begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
+            & & & & {\small Pivote} \\\cline{2-5}
+            & \multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} \\ \cline{2-5}
+            & \textbf{i} \textbf{j} & & & \\
+        \end{tabular}
+        \caption{Primer iteración: \textbf{j=p}\\Se cumple la condición del \textit{if} y la variable \textbf{i} se aumenta en 1(\textbf{i=p})}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[h!]
+        \centering
+        \begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
+            & & & & {\small Pivote} \\\cline{2-5}
+            & \multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} \\ \cline{2-5}
+            & & \textbf{i} \textbf{j} & & \\
+        \end{tabular}
+        \caption{Segunda iteración: \textbf{j=p+1}\\Se cumple la condición del \textit{if} y la variable \textbf{i} se aumenta en 1(\textbf{i=p+1})}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[h!]
+        \centering
+        \begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
+            & & & & {\small Pivote} \\\cline{2-5}
+            & \multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} \\ \cline{2-5}
+            & & & \textbf{i} \textbf{j} & \\
+        \end{tabular}
+        \caption{Última iteración: \textbf{j=r-1}\\Se cumple la condición del \textit{if} y la variable \textbf{i} se aumenta en 1(\textbf{i=r-1})}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[h!]
+        \centering
+        \begin{tabular}{p{1cm}p{1cm}p{1cm}p{1cm}p{1cm}}
+            & & & & {\small Pivote} \\\cline{2-5}
+            & \multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{3} \\ \cline{2-5}
+            & & & & \textbf{i+1} \\
+        \end{tabular}
+        \caption{El retorno implica el aumento de la variable \textbf{i} en la unidad(\textbf{i+1=r-1+1=r})}
+        \label{fig:my_label}
+    \end{figure}
+
+\section*{Problema 2}
+    \textbf{¿Cuál es el tiempo de ejecución de QuickSort cuando todos los elementos del arreglo tienen el mismo valor?}\\
+    
+    Debido al resultado obtenido en la pregunta 1, sabemos que la función \textbf{Partition} regresa el valor de la posición del pivote como la última del arreglo. Esto sucederá cada vez que el arreglo sea ingresado en la función.\\
+    
+    Considerado como el peor caso para este algoritmo, al obtener siempre un pivote en el último indice del arreglo, MergeSort tendrá la complejidad:
+    \begin{equation*}
+        \text{\textbf{MergeSort}}\in \Theta(n^2)
+    \end{equation*}
+
+\section*{Problema 3}
+    \textbf{¿Qué retorna la función de máximo subarreglo cuando todos los valores del arreglo son valores enteros negativos?}\\
+    
+    Para poder analizar el funcionamiento del algoritmo cuando todos los valores del arreglo fueran negativos, es primordial analizar la función \textbf{MaxCrossingSubArray}.\\
+    \begin{verbatim}
+        MaxCrossingSubArray(A[0,...,n-1],bajo,mitad,alto)
+        1|    suma_izq=infinito
+        2|    suma=0
+        3|    for i=mitad downto bajo
+        4|        suma+=A[i]
+        5|        if suma>suma_izq
+        6|            suma_izq=suma
+        7|            max_izq=1
+        8|    suma_der=infinito
+        9|    suma=0
+        10|    for j=mitad+1 to alto
+        11|        suma+=A[j]
+        12|        if suma>suma_der
+        13|            suma_der=suma
+        14|            max_der=j
+        15|    return(max_izq, max_der,suma_izq+suma_der)
+    \end{verbatim}
+    
+    De los valores calculados en el pesudocodigo nos interasan las variables \textbf{max\_izq,max\_der,sum\_izq+sum\_der}. Notamos que las 2 correspondientes sumas, al final se juntarán para regresar un solo resultado, de estas en la linea \textit{1} y \textit{8} se inicializan con un valor $\infty$, por lo que su suma seguira siendo el mismo valor.\\
+    
+    En cuanto a los valores de \textbf{max\_izq} y \textbf{max\_der}, dado que nunca se cumplira la condición en \textit{5 y 12}, pues la variable \textbf{suma} desde que es inicializada en \textit{2} con el valor 0, siempre será mayor a la suma de dos enteros cualesquiera negativos; Nunca se les realiza una incialización con ningun valor, pues este es obtenido forzosamente al cumplirse la condición en las líneas \textit{7 y 14}. Más existen lenguajes como Java que no permiten el uso de variables que no han sido declaradas e inicializadas antes, consideraremos que estas variables sean inicializadas con un valor negativo -1, pues este es el número más próximo a los índices de arreglos sin contenerlo, y en ocasiones también se utiliza con este fin, indicar que una variables que maneja los índices de un arreglo, aún no se ha utilizado o simplemente sigue siendo inválida para ser utilizada.
+    
+    \begin{verbatim}
+        MaxSubarrayDC(A[0,...,n-1],bajo,alto)
+        1|    if alto=bajo
+        2|        return (bajo,alto,A[bajo])
+        3|    else
+        4|        mitad=(bajo+alto)/2
+        5|        (bajo_izq,alto_izq,suma_izq)=MaxSubArrayDC(A,bajo,mitad)
+        6|        (bajo_der,alto_der,suma_der)=MaxSubArrayDC(A,mitad+1,alto)
+        7|        (cruz_izq,cruz_der,suma_cruz)=MaxSubArrayDC(A,bajo,mitad,alto)
+        8|        if suma_izq>suma_der && suma_izq>suma_cruz
+        9|            return (bajo_izq,alto_izq,suma_izq)
+        10|        if suma_der>suma_izq && suma_der>suma_cruz
+        11|           return (bajo_der,alto_der,suma_der)
+        12|        else
+        13|            return (cruz_izq,cruz_der,suma_cruz)
+    \end{verbatim}
+    
+    Para identificar los valores obtenidos para las variables en \textit{5,6,7}, es necesario solamente identificar una vez cual es el valor retornado por la función \textbf{MaxCrossingSubArray}, tal y como definimos antes. Entonces los valores que podremos obtener son:\\
+    $max\_izq = -1$\\
+    $max\_der = -1$\\
+    $suma = \infty$\\
+    
+    Sin importar el número de iteraciones realizadas, la función del máximo subarreglo cruzado siempre regresará los mismo valores. Por lo tanto, pensando que estamos analizando la primer llamada a la función \textbf{MaxSubarrayDC}, se entiende que el arbol de llamadas a funciones recursivas se ha originado por esta función y ya han terminado su ejecución para mostrarnos el valor final obtenido para estas variables; Notamos que de las líneas \textit{8-13}, se realiza la última elección de los valores máximos, pero dado que ninguno es mayor que otro pues todos son $\infty$, la línea \textit{12} correspondiente al \textit{else} será la que retorne el conjunto de variables.\\
+    
+    Los valores que retornará serán los mismos que los retornados por la función \textbf{MaxCrossingSubarray}:\\
+    \hfill \break
+    $cruz\_izq = -1$\\
+    $cruz\_der = -1$\\
+    $suma\_cruz = \infty$\\
+    
+\section*{Problema 4}
+    \textbf{Calcular el producto de las siguientes matrices mediante el algoritmo de Strassen}\\
+    
+    \begin{equation*}
+        \quad A=
+        \begin{pmatrix}
+            1 & 2 & 3 & 1 \\
+            3 & 4 & 4 & 2 \\
+            5 & 1 & 2 & 1 \\
+            2 & 3 & 0 & 1 \\
+        \end{pmatrix}
+    \end{equation*}
+    
+    \begin{equation*}
+        \quad B=
+        \begin{pmatrix}
+            1 & 4 & 5 & 1 \\
+            2 & 1 & 3 & 2 \\
+            1 & 4 & 0 & 3\\
+            4 & 5 & 2 & 2 \\
+        \end{pmatrix}
+    \end{equation*}
+    
+    El primer paso corresponde a la división de la matriz
