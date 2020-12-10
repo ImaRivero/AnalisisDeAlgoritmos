@@ -1,8 +1,25 @@
+/*
+    IPN - ESCOM
+    Análisis de Algoritmos
+    Prof: Benjamín Luna Benoso
+    Grupo: 3CV1
+    Práctca 5: Algoritmos Greedy
+    ---------------------------------------------
+    Creación: 9/Diciembre/2020
+    Creado por: 
+        + Omar Imanol Rivero Ronquillo
+        + Luis Eduardo Valle Martínez
+*/
+
 import java.util.ArrayList;
 
 public class Arbol {   
 
     protected ArrayList<Nodo> nodos;
+
+    public Arbol(){
+        nodos = new ArrayList<Nodo>();
+    }
 
     public ArrayList<Nodo> getNodos() {
         return nodos;
@@ -16,7 +33,7 @@ public class Arbol {
         nodos.add(nodo);
     }
 
-    public int getNumeroNodos(){
+    public int numeroNodos(){
         return nodos.size();
     }
     
@@ -28,14 +45,16 @@ public class Arbol {
      * @return
      */
     public Nodo getNodo(String nombreNodo,Integer peso){
-        for(Nodo nodo:nodos){
-            if(nodo.getNombre.equals(nombreNodo))
-                return nodo;
+        if(!nodos.isEmpty()){
+            for(Nodo nodo:nodos){
+                if(nodo.getNombre().equals(nombreNodo))
+                    return nodo;
+            }
         }
         // Si no existe el nodo se crea
         Nodo nodoAux = new Nodo(nombreNodo,peso);
-        nodos.add(nodo);
-        return nodo;
+        nodos.add(nodoAux);
+        return nodoAux;
     }
 
     /**
@@ -51,14 +70,16 @@ public class Arbol {
             return getNodo(elementos[0],Integer.parseInt(elementos[1]));
         }
         
-        for(Nodo nodo:nodos){
-            if(nodo.getNombre.equals(elementosNodo))
-                return nodo;
+        if(!nodos.isEmpty()){
+            for(Nodo nodo:nodos){
+                if(nodo.getNombre().equals(elementosNodo))
+                    return nodo;
+            }
         }
         // Si no existe el nodo se crea
         Nodo nodoAux = new Nodo(elementosNodo);
-        nodos.add(nodo);
-        return nodo;
+        nodos.add(nodoAux);
+        return nodoAux;
     }
 
     /**
@@ -68,7 +89,7 @@ public class Arbol {
      */
     public boolean existe(String nombreNodo){
         for(Nodo nodo:nodos){
-            if(nodo.getNombre.equals(nombreNodo))
+            if(nodo.getNombre().equals(nombreNodo))
                 return true;
         }
         return false;
@@ -76,12 +97,12 @@ public class Arbol {
 
     public void imprimirArbol(){
         for(Nodo nodo:nodos){
-            System.out.printf("\n %s:%d{");
+            System.out.printf("\n %s$%d => ",nodo.getNombre(),nodo.getPeso());
             for(Object transicion[]:nodo.getTransiciones()){
-                System.out.printf("%s$%s,",((Nodo)transicion[0]).getNombre(),(String)transicion[1]);
+                System.out.printf("%s$%s,",((Nodo)transicion[0]).getNombre(),(int)transicion[1]);
             }
-            System.out.println("");
         }
+        System.out.println();
     }
 
 }
@@ -98,11 +119,13 @@ class Nodo{
     public Nodo(String nombre){
         this.nombre = nombre;
         this.peso = 0;
+        transiciones = new ArrayList<Object[]>();
     }
 
     public Nodo(String nombre,int peso){
         this.nombre = nombre;
         this.peso = peso;
+        transiciones = new ArrayList<Object[]>();
     }
 
     public String getNombre() {

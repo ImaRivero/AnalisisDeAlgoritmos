@@ -13,8 +13,6 @@
         
 import java.util.*;
 
-import sun.security.krb5.internal.TransitedEncoding;
-
 import java.io.*;
 
 // Clase para el manejo de los archivos con las cantidades a evaluar
@@ -61,7 +59,7 @@ public class Archivos{
             cadena = eliminarTodosEspacios(cadena);
             lector.close();
         }catch(Exception e){
-            CuartaPractica.error(e.getMessage());
+            QuintaPractica.error(e.getMessage());
         }
         return cadena;
     }
@@ -76,7 +74,7 @@ public class Archivos{
                 lineas.add(eliminarEspacios(lector.nextLine()));
             lector.close();
         }catch(Exception e){
-            AjustePuntos.error(e.getMessage());
+            QuintaPractica.error(e.getMessage());
         }
         return lineas;
     }
@@ -92,27 +90,29 @@ public class Archivos{
         return valores;
     }
 
-    // Regresa los valores del archivo en un ArrayList con los pares de enteros
-    public ArrayList<Par> getValoresPar(){
-        ArrayList<Par> valores = new ArrayList<Par>();     
-        for(String par:getCadena().split("/")){ // Se divide la cadena por pares
-            String[] numeros = par.split(",");
-            valores.add(Par.crearPar(Integer.parseInt(numeros[0]),Integer.parseInt(numeros[1])));
-        }
-        return valores;
-    }
-
+    /**
+     * Recupera la estructura de un árbol descrita en un archivo
+     * a los objetos Arbol y Nodo, para su manejo
+     * @return
+     * 
+     * Estructura del archivo para recuperar un arbol
+     *      Cada línea del archivo es considerada un nodo:
+     *          >> nombre : peso_del_nodo { nombre_nodo_que_transiciona $ costo_transicion, ... } \n
+     *          i.e:
+     *              >> A:45{B$5,C$7} \n
+     */
     public Arbol getArbol(){
         Arbol arbol = new Arbol();
         for(String linea:getLineas()){
-            String elementos[] = linea.split("{");
+            System.out.println(linea);
+            String elementos[] = linea.split("\\{");
             Nodo nodo = arbol.getNodo(elementos[0]); // Se obtienen los elementos antes del paréntesis, posiblemente conteniendo el nodo y el peso
-            elementos[1].replace("}", "");
+            elementos[1] = elementos[1].replace("}", "");
             for(String transicion:elementos[1].split(",")){
-                elementos = transicion.split("$");
+                elementos = transicion.split("\\$");
                 nodo.agregarTransicion(arbol.getNodo(elementos[0]),Integer.parseInt(elementos[1]));
             }
         }
-        return valores;
+        return arbol;
     }
 }

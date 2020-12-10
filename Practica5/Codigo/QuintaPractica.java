@@ -77,34 +77,33 @@ public class QuintaPractica {
 
 				// Ejecución de los algoritmo según los bits activos de los argumentos ingresados
 				if ((argumentos & 1) > 0) { // Algoritmo Kruskal
-					Arbol arbol = null;
+					Arbol arbol;
 					int indiceColeccion = -1;
 
 					for(int indiceArchivo=indiceRutasArchivos;indiceArchivo<args.length;indiceArchivo++){ // Se obtienen los árboles de las rutas a los archivos en los argumentos
 						arbol = Archivos.archivo(args[indiceArchivo]).getArbol();
 					
 						System.out.println("\n Kruskal \n---------------");
-
+						arbol.imprimirArbol();
 						/*
 						Algoritmos.numeroOperaciones = 0;
 						kruskal(); 
-						*/
 
 						System.out.printf("P%d( %d ,%d )\n",indiceArchivo,arbol.numeroNodos(),(int)Algoritmos.numeroOperaciones);
-						punto ++;
 
 						indiceColeccion = grafica.agregarParOrdenado(
 							"Kruskal", 
 							(double)arbol.numeroNodos(),
 							Algoritmos.numeroOperaciones, 
 							indiceColeccion);
+						*/
 					}
 
-					grafica.crearGrafica(
+					/* grafica.crearGrafica(
 						"Graficación del tamaño n de nodos en el árbol vs instrucciones ejecutadas para el algoritmo Kruskal",
 						"Valor(n)", 
 						"NúmeroOperaciones", 
-						indiceColeccion);
+						indiceColeccion); */
 				}
 
 				if ((argumentos & 2) > 0) { // Algoritmo Huffman
@@ -122,7 +121,6 @@ public class QuintaPractica {
 						*/
 
 						System.out.printf("P%d( %d ,%d )\n",indiceArchivo,arbol.numeroNodos(),(int)Algoritmos.numeroOperaciones);
-						punto ++;
 
 						indiceColeccion = grafica.agregarParOrdenado(
 							"huffman", 
