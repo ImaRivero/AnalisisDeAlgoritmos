@@ -212,38 +212,12 @@ public class Huffman {
      * @return poncentaje de compresion
      */
     public float tasaDeCompresion(String orig, String comp){
-        byte[] bytesOriginal = orig.getBytes();
-        ArrayList<Byte> bytesComprim = new ArrayList<>();
-        ArrayList<String> split = splitArray(comp, 8);
 
-        // Conversion opcional
-        for(String s: split){
-            bytesComprim.add(Byte.parseByte(s));
-        }
+        // Cada caracter de la cadena original tiene 8 bits en utf-8
+        float numBitsOrig = orig.length() * 8;
+        // Cada caracter en la cadena comprimida representa un bit
+        float numBitsComp = comp.length();
 
-        return (bytesComprim.size() * 100) / bytesOriginal.length;
-    }
-
-    /**
-     * Subdivide la cadena original en subcadenas de tamaño maximo max, para
-     * nuestros efectos prácticos será de max=8 considerando que 1 byte = 8 bits
-     * @param original Cadena original
-     * @param max Tamaño maximo
-     * @return ArrayList con las subcadenas
-     */
-    public static ArrayList<String> splitArray(String original, int max){
-        ArrayList<String> salida = new ArrayList();
-        int num = original.length()/max;
-        
-        for(int i = 0; i < num+1; i++){
-            if(original.substring((i)*max, original.length()).length() < max){
-                salida.add(new String(original.substring(i*max, original.length())));
-                break;
-            }
-            else{
-                salida.add(new String(original.substring(i*max, (i+1)*max)));
-            }
-        }
-        return salida;
+        return (numBitsComp * 100) / numBitsOrig;
     }
 }
