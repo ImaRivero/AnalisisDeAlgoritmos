@@ -115,4 +115,63 @@ public class Archivos{
         }
         return arbol;
     }
+
+    /**
+     * Devuelve la lista de archivos en el directorio de entrada
+     * @param dir directorio
+     * @return lista de nombres
+     */
+    public static ArrayList<String> listaArchivos(String dir){
+        File[] files = new File(dir).listFiles();
+        ArrayList<String> result = new ArrayList<>();
+        for(File f: files)
+            if(f.isFile())
+                result.add(f.getName());
+        return result;
+    }
+
+    /**
+     * Lee el archivo sin hacer modificaciones al mismo
+     * @param path directorio donde se encuentra el archivo
+     * @param filename  nombre del archivo
+     * @return  string con el texto del archivo
+     */
+    public String leerArchivo(String path, String filename){
+        File fil = new File(path + "/" + filename);
+        String out = "";
+
+        try {
+            File myfile = new File("filename.txt");
+            myfile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            QuintaPractica.error(e.getMessage());
+        }
+
+        try{
+            Scanner lector = new Scanner(fil);
+            while(lector.hasNextLine()){
+                out += lector.nextLine();
+            }
+            lector.close();
+        } catch(FileNotFoundException e){
+            QuintaPractica.error(e.getMessage());
+        }
+        
+        return out;
+    }
+    /**
+     * Es
+     * @param contenido
+     * @param file
+     */
+    public void escribirArchivo(String contenido, String file){
+        try{
+            FileWriter wr = new FileWriter(file);
+            wr.write(contenido);
+            wr.close();
+        } catch(IOException e){
+            QuintaPractica.error(e.getMessage());
+        }
+    }
 }

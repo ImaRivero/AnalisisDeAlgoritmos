@@ -35,10 +35,10 @@ public class Huffman {
    
     // De la forma llave = caracter, contenido = codificacion de huffman
     static HashMap<Character, String> diccionario;
-    static int numOperaciones;
+    int numOperaciones;
 
     public Huffman(){
-        numOperaciones = 0;
+        //numOperaciones = 0;
         diccionario = new HashMap<>();
     }
 
@@ -48,7 +48,7 @@ public class Huffman {
      * @param s String que contiene la codificacion de huffman
      */
     public static void impArbol(NodoHuffman raiz, String s){
-        if(raiz.izq == null && raiz.der == null && Character.isLetter(raiz.car)){
+        if(raiz.izq == null && raiz.der == null && raiz.car != '$'){
             System.out.println(raiz.car + "\t|\t" + s);
             return;
         }
@@ -63,7 +63,7 @@ public class Huffman {
      * @param s codificacion de Huffman
      */
     public static void guardarDicc(NodoHuffman raiz, String s){
-        if(raiz.izq == null && raiz.der == null && Character.isLetter(raiz.car)){
+        if(raiz.izq == null && raiz.der == null && raiz.car != '$'){
             diccionario.put(raiz.car, s);
             return;
         }
@@ -77,7 +77,7 @@ public class Huffman {
      * @param entrada cadena de entrada
      * @return nodo raiz del arbol
      */
-    public static NodoHuffman crearArbol(String entrada){
+    public NodoHuffman crearArbol(String entrada){
         /*
         int n = 4; // charlist.size()
         char[] charArray = { 'A', 'B', 'C', 'D' };
@@ -122,12 +122,13 @@ public class Huffman {
 
             numOperaciones += 1;
         }
-
+        /*
         System.out.println("Char\t|\tHuffman");
         System.out.println("--------------------");
         impArbol(raiz, "");
+        */
         guardarDicc(raiz, "");
-
+    
         numOperaciones += 1;
         return raiz;
     }
@@ -137,7 +138,7 @@ public class Huffman {
      * @param s Entrada de texto original
      * @return  ArrayList de caracteres
      */
-    public static ArrayList<Character> charList(String s){
+    public ArrayList<Character> charList(String s){
         ArrayList<Character> out = new ArrayList<>();
         char[] charStr = s.toCharArray();
         for(char c : charStr){

@@ -107,25 +107,51 @@ public class QuintaPractica {
 				}
 
 				if ((argumentos & 2) > 0) { // Algoritmo Huffman
-					Arbol arbol = null;
 					int indiceColeccion = -1;
+					int punto = 1;
 
-					for(int indiceArchivo=indiceRutasArchivos;indiceArchivo<args.length;indiceArchivo++){ // Se obtienen los árboles de las rutas a los archivos en los argumentos
-						arbol = Archivos.archivo(args[indiceArchivo]).getArbol();
+					String path = "../Archivos/ArchivosHuffman";
+					ArrayList<String> listaArchivos = Archivos.listaArchivos(path);
 					
-						System.out.println("\n Kruskal \n---------------");
 
-						/*
-						Algoritmos.numeroOperaciones = 0;
-						huffman(); 
-						*/
+					for(String filename: listaArchivos){
+						String textoOriginal = Archivos.archivo(filename).leerArchivo(path, filename);
+						System.out.println("\n Huffman \n---------------");
 
-						System.out.printf("P%d( %d ,%d )\n",indiceArchivo,arbol.numeroNodos(),(int)Algoritmos.numeroOperaciones);
+						Huffman huff = new Huffman();
+						int n = huff.charList(textoOriginal).size(); // abscisas
+						huff.numOperaciones = 0; // ordenadas
+
+						NodoHuffman raiz = huff.crearArbol(textoOriginal);
+
+						String encode = huff.comprimir(textoOriginal);
+						String decode = huff.descomprimir(raiz, encode);
+						
+						System.out.println("Texto original: ");
+						System.out.println(textoOriginal);
+						System.out.println("--------------------------------------------------");
+						System.out.println("Arbol de Huffman: ");
+						System.out.println("Char\t|\tHuffman");
+						Huffman.impArbol(raiz, "");
+						System.out.println("--------------------------------------------------");
+						System.out.println("Texto comprimido:");
+						System.out.println(encode);
+						System.out.println("--------------------------------------------------");
+						System.out.println("Texto descomprimido:");
+						System.out.println(decode);
+						System.out.println("--------------------------------------------------");
+						System.out.println("Tasa de compresion: " + huff.tasaDeCompresion(decode, encode));
+						
+						System.out.println("--------------------------------------------------");
+						System.out.printf(" P%d( %d , %d )\n",punto,n,huff.numOperaciones);
+						System.out.println("__________________________________________________");
+
+						punto ++;
 
 						indiceColeccion = grafica.agregarParOrdenado(
 							"huffman", 
-							(double)arbol.numeroNodos(),
-							Algoritmos.numeroOperaciones, 
+							(double)n,
+							huff.numOperaciones, 
 							indiceColeccion);
 					}
 
