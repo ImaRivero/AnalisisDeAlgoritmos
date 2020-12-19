@@ -12,10 +12,27 @@
 		
 	Funcionamiento
 	>>>>>>>>>>>>>>
+		El programa permite ejecutar los algoritmos para la compresión de
+		archivos de texto plano mediante el algoritmo de Huffman.
+		Y el algoritmo para encontrar el árbol de recubrimiento mínimo
+		mediante el algoritmo de Kruskal.
+		
 		Es necesario indicar el algoritmo que se quiere evaluar mediante
 		el ingreso de parámetros precedidos por un guión donde:
 			-k : Algoritmo de Kruskal
 			-h : Algoritmo de Huffman
+			
+	Compilación
+	+++++++++++
+		$ javac -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar QuintaPractica.java
+
+	Ejecución Kruskal
+	+++++++++++++++++
+		$ java -cp .:../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar QuintaPractica -k ../Archivos/Grafo3 ../Archivos/Grafo4 ../Archivos/Grafo5 ../Archivos/Grafo6 ../Archivos/Grafo7 ../Archivos/Grafo8 ../Archivos/Grafo9 ../Archivos/Grafo10 
+
+	Ejecución Huffman
+	+++++++++++++++++
+		$ java -cp :../Bibliotecas/jfreechart-1.0.19.jar:../Bibliotecas/jcommon-1.0.23.jar QuintaPractica -h ../Archivos/Merge
 */
 
 import java.util.*;
@@ -49,6 +66,7 @@ public class QuintaPractica {
 			 * Argumentos//decimal: 
 			 * 	- k/Kruskal = 1
 			 * 	- h/Huffman = 2
+			 * 		-d/Descomprimir
 			 */
 
 			if (args.length == 1) // Solo se ingresa un argumento
@@ -65,6 +83,12 @@ public class QuintaPractica {
 							case 'h':
 								argumentos += 2;
 								break;
+							case 'd':
+								if((argumentos & 2) > 0)
+									argumentos += 4;	
+								else
+									QuintaPractica.error("Para ingresar el argumento 'd' es necesario indicar antes el argumento 'h'");
+								break;
 						}
 					}
 				}
@@ -77,33 +101,31 @@ public class QuintaPractica {
 
 				// Ejecución de los algoritmo según los bits activos de los argumentos ingresados
 				if ((argumentos & 1) > 0) { // Algoritmo Kruskal
-					Arbol arbol;
+					Grafo grafo;
 					int indiceColeccion = -1;
+					Kruskal kruskal = new Kruskal();
+
+					System.out.println("\n Kruskal \n---------------");
 
 					for(int indiceArchivo=indiceRutasArchivos;indiceArchivo<args.length;indiceArchivo++){ // Se obtienen los árboles de las rutas a los archivos en los argumentos
-						arbol = Archivos.archivo(args[indiceArchivo]).getArbol();
+						grafo = Archivos.archivo(args[indiceArchivo]).getGrafo();
 					
-						System.out.println("\n Kruskal \n---------------");
-						arbol.imprimirArbol();
-						/*
-						Algoritmos.numeroOperaciones = 0;
-						kruskal(); 
+						kruskal.kruskal(grafo); 
 
-						System.out.printf("P%d( %d ,%d )\n",indiceArchivo,arbol.numeroNodos(),(int)Algoritmos.numeroOperaciones);
+						System.out.printf("P%d( %d ,%d )\n",indiceArchivo,grafo.numeroNodos(),kruskal.numeroOperaciones);
 
 						indiceColeccion = grafica.agregarParOrdenado(
 							"Kruskal", 
-							(double)arbol.numeroNodos(),
-							Algoritmos.numeroOperaciones, 
+							(double)grafo.numeroNodos(),
+							kruskal.numeroOperaciones, 
 							indiceColeccion);
-						*/
 					}
 
-					/* grafica.crearGrafica(
-						"Graficación del tamaño n de nodos en el árbol vs instrucciones ejecutadas para el algoritmo Kruskal",
+					grafica.crearGrafica(
+						"Graficación del número de nodos en el grafo vs instrucciones ejecutadas para el algoritmo Kruskal",
 						"Valor(n)", 
 						"NúmeroOperaciones", 
-						indiceColeccion); */
+						indiceColeccion);
 				}
 
 				if ((argumentos & 2) > 0) { // Algoritmo Huffman
@@ -169,20 +191,5 @@ public class QuintaPractica {
 		} else
 			QuintaPractica.error("Son necesarios argumentos para la ejecución del programa\n" + ANSI_GREEN
 					+ "i.e: $ java QuintaPractica -[k,h] archivo_arbol_1 archivo_arbol_2 archivo_arbol_3 ...  archivo_arbol_n");
-	}
-}
-
-/*
-	Clase definitoria de algoritmos
-*/
-class Algoritmos{
-	public static double numeroOperaciones;
-
-	public void kruskal(){
-
-	}
-
-	public void huffman(){
-
 	}
 }

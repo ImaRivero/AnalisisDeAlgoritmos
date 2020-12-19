@@ -89,31 +89,32 @@ public class Archivos{
 
         return valores;
     }
-
-    /**
-     * Recupera la estructura de un árbol descrita en un archivo
-     * a los objetos Arbol y Nodo, para su manejo
+	
+/**
+     * Recupera la estructura de un grafo descrita en un archivo
+     * a los objetos Grafo y Nodo, para su manejo
      * @return
      * 
-     * Estructura del archivo para recuperar un arbol
+     * Estructura del archivo para recuperar un grafo
      *      Cada línea del archivo es considerada un nodo:
      *          >> nombre : peso_del_nodo { nombre_nodo_que_transiciona $ costo_transicion, ... } \n
      *          i.e:
      *              >> A:45{B$5,C$7} \n
      */
-    public Arbol getArbol(){
-        Arbol arbol = new Arbol();
+    public Grafo getGrafo(){
+        Grafo grafo = new Grafo();
+        int indiceNodo = 0;
         for(String linea:getLineas()){
-            System.out.println(linea);
             String elementos[] = linea.split("\\{");
-            Nodo nodo = arbol.getNodo(elementos[0]); // Se obtienen los elementos antes del paréntesis, posiblemente conteniendo el nodo y el peso
+            Nodo nodo = grafo.getNodo(elementos[0],indiceNodo); // Se obtienen los elementos antes del paréntesis, posiblemente conteniendo el nodo y el peso
             elementos[1] = elementos[1].replace("}", "");
             for(String transicion:elementos[1].split(",")){
                 elementos = transicion.split("\\$");
-                nodo.agregarTransicion(arbol.getNodo(elementos[0]),Integer.parseInt(elementos[1]));
+                nodo.agregarTransicion(grafo.getNodo(elementos[0]),Integer.parseInt(elementos[1]));
             }
+            indiceNodo++;
         }
-        return arbol;
+        return grafo;
     }
 
     /**

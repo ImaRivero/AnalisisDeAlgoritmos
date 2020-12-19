@@ -1,0 +1,32 @@
+\section*{Algoritmos Greedy}
+    Los algoritmos voraces representan un paradigma algorítmico que contruye la solución paso a paso mediante la elección del siguiente elemento que ofrece el mayor beneficio inmedianto. De forma que aquellos problemas donde la elección de locales óptimos lleva a una solución óptima global, solo la mejor opción para este tipo de algoritmos.\\
+    
+    Existe cantidad de algoritmos que utiliza este paradigma, entre ellos uno de los más conocido es el problema de la \textit{Mochila fraccionaria}. La estrategia óptima para escoger un elemento es aquel que tiene una relación valor/peso mayor. Esta estrategia lleva a la solución óptima global dada la característica de tomar fracciones de un elemento.
+
+\section*{Algoritmo de Kruskal}
+    Algoritmo perteneciente a la teoría de grafos, es utilizado para encontrar un árbol recubridor mínimo en un grafo conexo y ponderado, de forma que busca un subconjunto de aristas que, fomando un árbol, incluye todos los vértices y además asegura que el valor de todas las aristas que lo conforman suman el mínimo. En el caso donde el grafo no es conexo, se buscará un bosque expandido mínimo, lo que es igual a un arbol expandido mínimo para cada componente conexo.\\
+    
+    El algoritm trata a los grafos como bosques y cada nodo tiene un árbol individual. Un árbol conecta a otro, si y solo si, tiene el costo menor entre todas las opciones disponibles.\\
+    
+    La razón incial por la que los árboles de expansión mínima empezaron a estudiarse, se debió a la necesidad de realizar diseños de redes elécticas de una manera que minimizara el costo del cableado.\\
+    
+    El algoritmo de Kruskal es considerado dentro de la clasificación de algoritmos voraces, el ordenamiento y consumo de los elementos según su peso, rige que sean tomados aquellos desde el menor peso sin realizar comparaciones complejas de todas las posibles combinaciones.\\
+    
+    Pasos del algoritmo:
+    \begin{enumerate}
+        \item Se eliminan todos los bucles y arcos paralelos del grafo, permaneciendo aquel de menor costo
+        \item Se acomodan todos los arcos en orden creciente de sus pesos
+        \item Se añaden los arcos que tienen el menor peso, considerando que todas las aristas seán contempladas en el árbol mínimo de expasión y que no se creen bucles.
+    \end{enumerate}
+    
+
+\section*{Codificación de Huffman}
+    La compresión de archivos representa una gran ventaja en los momentos de enviar datos a través de la red o de simplemente almacenar archivos en alguna memoria, pues optimizas el espacio disponible, por lo tanto, un algoritmo que tenga altas tasas de compresión siempre será necesario.
+    
+    También conocido como Algoritmo de Compresión de Código de Huffman, es un algoritmo utilizado para comprimir datos y forma la idea básica detrás de la compresión de archivos. Pertenece a la rama de algoritmos voraces, por la forma en la que construye su codificación haciendo uso de una cola de prioridad ordenada de menor a mayor, de acuerdo a la frecuencia de repetición por caracter. Una de las grandes fortalezas de la codificación de Huffman es que previene cualquier tipo de ambigüedad en el proceso de descompresión o decodificación, usando el concepto del código prefijo, esto es, un código asociado a un caracter no podrá estar presente como prefijo de cualquier otro código. \\
+    
+    
+    
+    
+    
+    

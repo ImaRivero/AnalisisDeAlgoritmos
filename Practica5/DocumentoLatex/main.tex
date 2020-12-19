@@ -1,0 +1,94 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsfonts,amssymb,amsmath}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{enumitem}
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lscape}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
+
+\begin{document}
+
+\begin{center}
+    
+    \begin{tabular}{l c r}
+    \includegraphics[scale=0.15]{Imagenes/IPN.jpeg}
+    & 
+        \bf\fontsize{22}{0}{\selectfont{Instituto Polit\'ecnico Nacional}}
+
+    
+    & \includegraphics[scale=0.08]{Imagenes/escom.png} \\
+     
+    & \bf\fontsize{22}{0}{\selectfont{ Escuela Superior de C\'omputo}} &  \\
+    \end{tabular}
+
+	
+	\vspace*{2\baselineskip}
+	
+	{
+		\bf\fontsize{12}{0}{\selectfont{An\'alisis de Algoritmos, Sem: 2021-1, 3CV1, Pr\'actica 5, 8/12/20}}
+	}
+			
+	\vspace*{2\baselineskip}
+			 
+	{
+		\fontsize{23}{0}{\selectfont{Práctica 5: Algoritmos greedy}}
+	}
+	
+	\vspace*{2\baselineskip}
+	
+	{
+		\bf\fontsize{12}{0}{\selectfont{Valle Mart\'inez Luis Eduardo, Rivero Ronquillo Omar Imanol}}
+	}
+	
+	\vspace*{1\baselineskip}
+	
+	{
+		\fontsize{12}{0}{\textit{lvalle212@gmail.com, imanol.rivero7@gmail.com}}
+	}
+	
+	\vspace*{2\baselineskip}
+
+    {
+	    \fontsize{12}{0}\selectfont{
+	    \textbf{Resumen:} En el actual documento se presenta el análisis de algoritmos que operan bajo la estrategia de búsqueda voraz o también llamados \textbf{Greedy}}
+	    
+	    \fontsize{12}{0}\selectfont{
+	    \textbf{Palabras Clave:} Greedy, , Java}
+	
+	}
+\end{center}
+
+\hfill \break
+\hfill \break
+\hfill \break
+
+\chapter*{Introducción} 
+    \input{Introduccion.tex}
+
+\chapter*{Conceptos B\'asicos}
+   \input{Conceptos_Basicos.tex}
+
+\chapter*{Experimentación y Resultados}
+        \section*{Códigos de Huffman}
+        \input{Huffman/huffman}
+        \newpage
+    
+    \section*{Algoritmo de Kruskal}
+        \input{Kruskal/kruskal}
+        \newpage
+        
+\chapter*{Conclusiones}
+    \input{Conclusiones.tex}
+
+\end{document}
