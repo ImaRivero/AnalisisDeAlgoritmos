@@ -3,7 +3,7 @@
     Análisis de Algoritmos
     Prof: Benjamín Luna Benoso
     Grupo: 3CV1
-    Práctca 5: Algoritmos Greedy
+    Práctca 6: Programación Dinámica
     ---------------------------------------------
     Creación: 18/Diciembre/2020
     Creado por: 
@@ -21,7 +21,7 @@ public class Archivos{
     protected String ruta;
 
     // Se debe especificar la ruta del archivo en el constructor
-    private Archivos(String r){
+    public Archivos(String r){
         ruta = r;
     }
 
@@ -86,7 +86,6 @@ public class Archivos{
         // Se separa la cadena en las cantidad separadas por comas y se guardan como enteros en 
         for(String cantidad:getCadena().split(","))
                 valores.add( Integer.parseInt(cantidad));
-
         return valores;
     }
 

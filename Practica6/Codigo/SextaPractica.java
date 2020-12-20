@@ -92,36 +92,7 @@ public class SextaPractica {
 
 			// Ejecución de los algoritmo según los bits activos de los argumentos ingresados
 			if ((argumentos & 1) > 0) { // Algoritmo Fibonacci
-				int indiceColeccion = -1;
-				System.out.println("\n Fibonacci\n---------------");
-
-				/* for(Valores_Fibonacci){ // Se obtiene el conjunto de conjunto de objetos para la mochila
-					
-					Ejecución de algoritmos fibonacci
-					System.out.printf("P%d( %d ,%d )\n",i,valor_eje_x,valor_eje_y); */
-
-					/* indiceColeccion = grafica.agregarParOrdenado(
-						"Fibonacci Recursivo", 
-						valor_eje_x,
-						numeroOperaciones, 
-						indiceColeccion);
-					indiceColeccion = grafica.agregarParOrdenado(
-						"Fibonacci Top-down", 
-						valor_eje_x,
-						numeroOperaciones, 
-						indiceColeccion);
-					indiceColeccion = grafica.agregarParOrdenado(
-						"Fibonacci Botton-up", 
-						valor_eje_x,
-						numeroOperaciones, 
-						indiceColeccion); */
-				/* } */
-
-				grafica.crearGrafica(
-					"Graficación del índice de Fibonacci vs instrucciones ejecutadas para los algoritmos de Fibonacci",
-					"Valor(n)", 
-					"NúmeroOperaciones", 
-					indiceColeccion);
+				new ControladorFibonacci().init(rutaArchivo);
 			}
 
 			if ((argumentos & 2) > 0) { // Algoritmo Mochila 0-1
@@ -152,9 +123,10 @@ public class SextaPractica {
 					"Valor(n)", 
 					"NúmeroOperaciones", 
 					indiceColeccion);
+				grafica.mostrarGrafica();
 			}
 
-			grafica.mostrarGrafica();
+			
 
 		} else
 			SextaPractica.error("Son necesarios argumentos para la ejecución del programa\n" + ANSI_GREEN
