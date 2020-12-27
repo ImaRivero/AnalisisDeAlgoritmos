@@ -1,0 +1,37 @@
+\section*{Programación dinámica}
+    La programación dinámica fue utilizada por primera vez en 1940 por Richard Bellman para el proceso de resolucion de problemas donde se necesita encontrar la solución óptima una después de otra. Para 1953 refino su significado al que actualmente identificamos, el anido de subproblemas de decisión dentro de decisiones más grandes.
+    
+    La programación dinamica refiere tanto al método de optimización matemática como el método de programación computacional, utilizandose en problemas de optimización en una amplia variedad de campos diversos, desde la ingeniería en sus diversas ramas a las ciencias económicas y financieras.
+    
+    En lo que refiere al método de programación dinámica en las ciencias de computación, realiza una combinación de las soluciones de los subproblemas como lo hace Divide y vencerás.\\
+    
+    Este método también permite subsanar un problema derivado de algoritmos poco eficientes implementados mediante recursividad, la resolución de los subproblemas se realiza más de una vez, pero al guardar los valores en una tabla ya no es necesario recalcular la solución cada vez.\\
+    
+    Existen 2 propiedades principales que deben identificarse en un problema para intentar la resolución mediante la programación dinámica: El traslapamiento de subproblemas y subestructura óptima, propiedad que comparte con las algunas de las soluciones greedy, donde la solución optima global se compone de las soluciones óptimas de los sub problemas.
+    
+    Pasos de una resolución de un problema mediante programación dinámica:
+    \begin{enumerate}
+        \item Se determinan las características de una solución óptima
+        \item Definición del valor de una solución óptima recursivamente
+        \item Cálculo de una solución óptima, típicamente mediante la técnica \textit{bottom-up}
+        \item Construcción de una solución óptima a partir de las soluciones previamente calculadas 
+    \end{enumerate}
+    
+\section*{Fibonacci}
+    La sucesión de Fibonacci fue descubierta por Leonardo de Pisa, matemático italiano nacido en 1170. Es una de las formulas más famosas en las matemáticas. A menudo es llamada como "El código secreto de la naturaleza" o "La regla universal de la naturaleza", se dice que gobierna las proporciones de la gran mayoría de cosas que nos rodean, desde la Gran Piramide de Giza, hasta la icónica concha de mar.
+    
+    Cada número de la secuencia es la suma de los dos números que le preceden. Y su definición matemática es la siguiente:
+    
+    \begin{center}
+        $F_{n}=F_{n-1}+F_{n-2}$\\
+        Tal que $F_{0}=0$ y $F_{1}=1$
+    \end{center}
+    Teniendo como primeros elementos de la secuencia a 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...
+    
+    
+\section*{Algoritmo de la Mochila 1-0}
+    Se dan pesos y valores para \textbf{n} objetos, deben de ingresarse estos objetos en una mochila de capacidad \textbf{P} para obtener el valor total máximo en la mochila. En otras palabras, dados 2 arreglos enteros w[0,...,n-1] y b[0,...,n-1], representan los pesos y beneficios para cada objeto respectivamente, y dado un entero \textbf{P} que represnta la capacidad de la mochila, se debe de encontrar un subarreglo de beneficio máximo, tal que la suma de los pesos de este subarreglo sera menor o igual a \textbf{P}. No puede fraccionarse un objeto, debes tomar o no tomar los objetos.\\
+    
+    La descipción del problema a resolver lo hace parecer fácil de resolver, pero la naturaleza real de este es más compleja, siendo útil mediante variantes del algoritmo original, para diversos campos.\\
+    
+    Formalmente se le conoce a este problema como "Problema de la mochila multidimensional 0/1(Multidimensional Knpasack Problem MKP)", donde una dimensión correponde a los límites dados por una restricción(como el peso que puede cargar la mochila, el volúmen máximo y/o la cantidad máxima de cada objeto que se permite);Es un problema interesante de optimización combinacional NP-completo que modela un número de aplicaciones complejas de logística, finanzas, telecomunicaciones, ciencias de la computación y otros campos diversos. El \textit{MKP} es estudiado extensamente en diversos textos, pero a raíz de su aplicación en situaciones específicas existe una gran cantidad de variantes estudiadas actualmentev que resuelven problematicas reales, incluso con implementaciones del \textit{MKP} no deterministas. El estudio de estas variantes existentes sobrepasa el objetivo de la presente práctica, por lo que no se considerarán pero resulta importante conocer que es un problema con una amplia posibilidad de aplicación mediante las variantes existentes y que se estudian mejor en el texto \cite{MKPV}.

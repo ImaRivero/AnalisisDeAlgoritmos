@@ -1,0 +1,103 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsfonts,amssymb,amsmath}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{enumitem}
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lscape}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
+
+\begin{document}
+
+\begin{center}
+    
+    \begin{tabular}{l c r}
+    \includegraphics[scale=0.15]{Imagenes/IPN.jpeg}
+    & 
+        \bf\fontsize{22}{0}{\selectfont{Instituto Polit\'ecnico Nacional}}
+
+    
+    & \includegraphics[scale=0.08]{Imagenes/escom.png} \\
+     
+    & \bf\fontsize{22}{0}{\selectfont{ Escuela Superior de C\'omputo}} &  \\
+    \end{tabular}
+
+	
+	\vspace*{2\baselineskip}
+	
+	{
+		\bf\fontsize{12}{0}{\selectfont{An\'alisis de Algoritmos, Sem: 2021-1, 3CV1, Pr\'actica 6, 14/12/20}}
+	}
+			
+	\vspace*{2\baselineskip}
+			 
+	{
+		\fontsize{23}{0}{\selectfont{Práctica 6: Algoritmos greedy, Programación Dinámica}}
+	}
+	
+	\vspace*{2\baselineskip}
+	
+	{
+		\bf\fontsize{12}{0}{\selectfont{Valle Mart\'inez Luis Eduardo, Rivero Ronquillo Omar Imanol}}
+	}
+	
+	\vspace*{1\baselineskip}
+	
+	{
+		\fontsize{12}{0}{\textit{lvalle212@gmail.com, imanol.rivero7@gmail.com}}
+	}
+	
+	\vspace*{2\baselineskip}
+
+    {
+	    \fontsize{12}{0}\selectfont{
+	    \textbf{Resumen:} En el actual documento se presenta el análisis de algoritmos que operan bajo la estrategia de búsqueda voraz o también llamados \textbf{Greedy} y algoritmos que operan mediante programación dinámica}
+	    
+	    \fontsize{12}{0}\selectfont{
+	    \textbf{Palabras Clave:} Programación Dinámica, Fibonacci, Mochila 0-1, Java }
+	
+	}
+\end{center}
+
+\chapter*{Introducción} 
+    \input{Introduccion.tex}
+
+\chapter*{Conceptos B\'asicos}
+   \input{Conceptos_Basicos.tex}
+
+\chapter*{Experimentación y Resultados}
+    \section*{Algoritmo de Fibonacci}
+        \input{Fibonacci/Fibonacci}
+        \newpage
+    \section*{Algoritmo de la Mochila 1-0}
+        \input{Knapsack/Mochila}
+        
+\chapter*{Conclusiones}
+    \input{Conclusiones.tex}
+    
+\begin{thebibliography}{}
+
+    \bibitem{clase}Luna,B.[Preparación Estudiantil de 10].(2020, Agosto, 22). Sucesión de Fibonacci mediante Programación Dinámica[Archivo de video]. Recuperado de https://www.youtube.com/watch?v=fXCMZ8ilSA8
+    
+    \bibitem{clasePD}Luna,B.[Benjamín Luna].(2020, Agosto, 22). \textit{Problema de la Mochila Entera con Programación Dinámica}[Archivo de video]. Recuperado de https://www.youtube.com/watch?v=9srgDGnyZKA
+    
+    \bibitem{articulo1}Ghose T.,(2018, Octubre, 24). What is the Fibonacci Sequence?. Live Science. Recuperado de https://www.livescience.com/37470-fibonacci-sequence.html
+    
+    \bibitem{MKPV} \textsc{Laabadi, S., Naimi,M., El Amri, H. and Achchab, B.} (2018) \textit{The 0/1 Multidimensional Knapsack Problem and Its Variants: A Survey of Practical}
+    
+    \bibitem{TP}\textsc{Tutorials Point} \textit{DDA - Dynamic Programming} web:https://www.tutorialspoint.com/design\_and\_analysis\_of\_algorithms/design\_and\_analysis\_of\_algorithms\_dynamic\_programming.htm
+    
+    \bibitem{W}\textsc{Wikipedia} \textit{Dynamic Programming} web:https://www.tutorialspoint.com/design\_and\_analysis\_of\_algorithms/design\_and\_analysis\_of\_algorithms\_dynamic\_programming.htm
+\end{thebibliography}
+
+\end{document}
