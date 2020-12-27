@@ -107,4 +107,42 @@ public class Archivos{
         return P;
     }
 
+    /**
+     * Devuelve la lista de archivos en el directorio de entrada
+     * @param dir directorio
+     * @return lista de nombres
+     */
+    public static ArrayList<String> listaArchivos(String dir){
+        File[] files = new File(dir).listFiles();
+        ArrayList<String> result = new ArrayList<>();
+        for(File f: files)
+            if(f.isFile())
+                result.add(f.getName());
+        return result;
+    }
+
+    /**
+     * Lee el archivo sin hacer modificaciones al mismo
+     * @param path directorio donde se encuentra el archivo
+     * @param filename  nombre del archivo
+     * @return  string con el texto del archivo
+     */
+    public String leerArchivo(String path, String filename){
+        File fil = new File(path + "/" + filename);
+        String out = "";
+
+        try{
+            Scanner lector = new Scanner(fil);
+            while(lector.hasNextLine()){
+                out += lector.nextLine();
+            }
+            out = eliminarTodosEspacios(out);
+            lector.close();
+        } catch(FileNotFoundException e){
+            //QuintaPractica.error(e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return out;
+    }
 }

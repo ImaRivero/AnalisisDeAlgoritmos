@@ -92,6 +92,7 @@ public class SeptimaPractica {
 			// Ejecución de los algoritmo según los bits activos de los argumentos ingresados
 			if ((argumentos & 1) > 0) { // Algoritmo LCS
 				LCS lcs = new LCS();
+				lcs.init();
 			}
 
 			if ((argumentos & 2) > 0) { // Algoritmo Multipliación de una secuencia de Matrices
